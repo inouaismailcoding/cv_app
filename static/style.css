@@ -1,0 +1,87 @@
+*{
+    margin: auto;
+    padding: auto;
+}
+
+.grille 
+{
+    max-width: 1000px;
+    width: 89%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 300px);
+    grid-gap: 5px;
+    justify-content: center;
+}
+.item
+{
+    border: 1px solid rgb(71, 63, 71);
+    border-radius: 15px rgb(71, 63, 71);
+    text-decoration: none;
+}
+
+
+.myTable thead th {
+    color: rgb(199, 195, 195);
+    background-color: darkblue;
+    border: 1px solid;
+    border-radius: 15px  rgb(50, 67, 223);
+    padding: 1px 5px;
+    margin: 0 5px;
+    text-transform: capitalize;
+    text-align: center;
+  }
+.myTable tbody td {
+    border: 1px solid ;
+    border-radius: 15px rgb(48, 46, 46);
+    padding: 1px 5px;
+    margin: 0 5px;
+    font-size: 14px;
+    text-align: center;
+    text-transform: lowercase;
+    color: darkblue;
+  }
+.action {
+    max-width: 300px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 70px);
+    justify-content: center;
+    grid-gap: 8px;
+  }
+.myTable tbody td button {
+    border: 1px solid rgb(3, 3, 36);
+    border-radius: 15px;
+    font-size: 12px;
+    margin: 3px 0;
+    text-align: center;
+    text-transform: lowercase;
+  }
+.info_btn {
+    background-color: rgb(91, 110, 216);
+    color: #fff;
+  }
+
+.edit_btn {
+    background-color: rgb(135, 224, 195);
+    color: darkblue;
+  }
+
+.delete_btn {
+    background-color: rgb(230, 63, 63);
+    color: #000;
+  }
+  td .article_list{
+    text-align: left;
+  }
+
+  .info_btn:hover {
+    background-color: darkblue;
+    color: white;
+  }
+  .edit_btn:hover {
+    background-color: green;
+    color: white;
+  }
+  .delete_btn:hover {
+    background-color: red;
+    color: white;
+  }

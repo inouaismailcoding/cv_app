@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}{% load static %}{% load widget_tweaks %} {% block content %}
+    <h1>bienvenu dans ma page d'enretrainement</h1>
+    {{profile}}
+  {% if profile %}
+    <h2>OKAY</h2>
+  {% else %}
+  <h2>NOTOKAY</h2>
+  {% endif %}
+{% endblock %}

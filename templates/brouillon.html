@@ -1,0 +1,425 @@
+{% extends 'layout.html' %}{% load static %} {% block content %}
+    <h4>bienvenu dans MOn Brouillon</h4>
+
+{% load widget_tweaks %}
+
+
+<div  class="d-none">
+   Contenu de la div
+</div>
+
+<div class="d-flex">
+   <div class="info_perso col-4">
+       <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+        {{ form.photo.label_tag }}
+        {{ form.photo }}
+    </div>
+    <button type="submit" class="btn btn-primary">Télécharger</button>
+</form>
+
+        <div class="cv-div mt-3"><button id="toggle-button-cv" class="btn btn-primary">
+   <i class="fas fa-plus myIcon"></i> Afficher la div
+</button>
+
+        <div class="d-none" id="div-info-perso">
+       <h4>Information personelle</h4>
+    <form method="post"  enctype="multipart/form-data" id="info-perso-form">
+  {% csrf_token %}
+  <div class="form-group mt-2">
+     {{ form.nom|attr:"class:form-control"|attr:"placeholder:Votre prénom" }}
+  </div>
+  <div class="form-group mt-2">
+    {{ form.prenom|attr:"class:form-control"|attr:"placeholder:Votre nom de famille" }}
+  </div>
+  <div class="form-group mt-2">
+    {{ form.email|attr:"class:form-control"|attr:"placeholder:Votre email" }}
+  </div>
+  <div class="form-group mt-2">
+     {{ form.telephone|attr:"class:form-control"|attr:"placeholder:Votre numéro de téléphone" }}
+  </div>
+  <div class="form-group mt-2">
+      {{ form.address|attr:"class:form-control"|attr:"placeholder:Votre adresse" }}
+  </div>
+  <div class="form-group mt-2">
+      <div class="input-group date" id="{{ form.birth_date.id_for_label }}_picker">
+      {{ form.birth_date|attr:"class:form-control"|attr:"type:date" }}
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+    </div>
+  </div>
+   <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
+</form>
+
+  </div>
+</div>
+
+        <div class="formation-div mt-3"><button id="toggle-button-formation" class="btn btn-primary">
+   <i class="fas fa-plus myIcon"></i> Afficher la div
+</button>
+
+        <div class="d-none" id="div-info-formation">
+       <h4>Formation</h4>
+    <form method="post"  enctype="multipart/form-data" id="info-formation-form">
+  {% csrf_token %}
+  <div class="form-group mt-2">
+     {{ formationForm.diplome|attr:"class:form-control"|attr:"placeholder:Diplome Obtenu" }}
+  </div>
+  <div class="form-group mt-2">
+    {{ formationForm.ecole|attr:"class:form-control"|attr:"placeholder:Etablissement Obtention" }}
+  </div>
+  <div class="form-group mt-2">
+    {{ formationForm.ville|attr:"class:form-control"|attr:"placeholder:Ville" }}
+  </div>
+  <div class="form-group mt-2">
+     {{ formationForm.debut|attr:"class:form-control"|attr:"type:date" }}
+  </div>
+  <div class="form-group mt-2">
+      {{ formationForm.fin|attr:"class:form-control"|attr:"type:date"}}
+  </div>
+        <div class="form-group mt-2">
+      {{ formationForm.description|attr:"class:form-control"|attr:"placeholder:Description ou Commentaire" }}
+  </div>
+
+
+  <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
+</form>
+
+  </div>
+        </div>
+         <div class="experience-div mt-3"><button id="toggle-button-experience" class="btn btn-primary">
+   <i class="fas fa-plus myIcon"></i> Afficher la div
+</button>
+
+        <div class="d-none" id="div-info-experience">
+       <h4>Experience Profesionnelle</h4>
+    <form method="post"  enctype="multipart/form-data" id="info-experience-form">
+  {% csrf_token %}
+  <div class="form-group mt-2">
+     {{ experienceForm.titre|attr:"class:form-control"|attr:"placeholder:le Titre de votre experience" }}
+  </div>
+  <div class="form-group mt-2">
+    {{ experienceForm.entreprise|attr:"class:form-control"|attr:"placeholder:Le nom de l'entreprise" }}
+  </div>
+  <div class="form-group mt-2">
+    {{ experienceForm.ville|attr:"class:form-control"|attr:"placeholder: ville" }}
+  </div>
+  <div class="form-group mt-2">
+     {{ experienceForm.debut|attr:"class:form-control"|attr:"type:date"}}
+  </div>
+  <div class="form-group mt-2">
+      {{ experienceForm.fin|attr:"class:form-control"|attr:"type:date" }}
+  </div>
+        <div class="form-group mt-2">
+      {{ experienceForm.description|attr:"class:form-control"|attr:"placeholder:la description de l'experience" }}
+  </div>
+
+
+  <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
+</form>
+
+  </div>
+        </div>
+
+       <div class="competence-div mt-3"><button id="toggle-button-competence" class="btn btn-primary">
+   <i class="fas fa-plus myIcon"></i> Afficher la div
+</button>
+
+        <div class="d-none" id="div-info-competence">
+       <h4>Formation</h4>
+    <form method="post"  enctype="multipart/form-data" id="info-competence-form">
+  {% csrf_token %}
+  <div class="d-flex">
+      <div class="form-group mt-2 col-9">
+     {{ competenceForm.competence|attr:"class:form-control"|attr:"placeholder:Votre Competence" }}
+  </div>
+      <label for="niveau" class="mx-3">niveau</label>
+  <div class="form-group mt-2 col-3">
+
+    {{ competenceForm.niveau|attr:"class:form-control"|attr:"placeholder:Noter votre niveau" }}
+  </div>
+  </div>
+
+
+
+
+  <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
+</form>
+
+  </div>
+        </div>
+
+        <div class="langue-div mt-3"><button id="toggle-button-langue" class="btn btn-primary">
+   <i class="fas fa-plus myIcon"></i> Afficher la div
+</button>
+
+        <div class="d-none" id="div-info-langue">
+       <h4>Langue</h4>
+    <form method="post"  enctype="multipart/form-data" id="info-langue-form">
+  {% csrf_token %}
+  <div class="d-flex">
+      <div class="form-group mt-2 col-9">
+     {{ langueForm.langue|attr:"class:form-control"|attr:"placeholder:entree une langue" }}
+  </div>
+      <label for="niveau" class="mx-3">niveau</label>
+  <div class="form-group mt-2 col-3">
+
+    {{ langueForm.niveau|attr:"class:form-control" }}
+  </div>
+  </div>
+
+
+
+
+  <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
+</form>
+
+  </div>
+        </div>
+
+        <div class="centreInteret-div mt-3"><button id="toggle-button-centreInteret" class="btn btn-primary">
+   <i class="fas fa-plus myIcon"></i> Afficher la div
+</button>
+
+        <div class="d-none" id="div-info-centreInteret">
+       <h4>Centre d'interet</h4>
+    <form method="post"  enctype="multipart/form-data" id="info-centreInteret-form">
+  {% csrf_token %}
+
+      <div class="form-group mt-2 col-9">
+     {{ centreInteretForm.titre|attr:"class:form-control"|attr:"placeholder:entree un centre d'interet" }}
+
+  </div>
+
+
+
+
+  <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
+</form>
+
+  </div>
+        </div>
+
+   </div>
+   </div>
+
+
+    <div class="col-8"></div>
+</div>
+<div class='contain-cv'>
+  <h4>My cv</h4>
+</div>
+
+
+<script>
+// Pour afficher et masquer la div information Personnelle
+hideAndShowDiv('toggle-button-cv','div-info-perso')
+
+// Pour afficher et masquer la div information Formation
+hideAndShowDiv('toggle-button-formation','div-info-formation')
+
+// Pour afficher et masquer la div information Experience
+hideAndShowDiv('toggle-button-experience','div-info-experience')
+
+// Pour afficher et masquer la div information Competences
+hideAndShowDiv('toggle-button-competence','div-info-competence')
+
+// Pour afficher et masquer la div des langue parlée et ecris
+hideAndShowDiv('toggle-button-langue','div-info-langue')
+
+// Pour afficher et masquer la div centre d'interet
+hideAndShowDiv('toggle-button-centreInteret','div-info-centreInteret')
+
+
+// On enregistre le formualaire des informations personnelles
+ $('form').submit(function(event) {
+        event.preventDefault();
+        var form = $("#info-perso-form");
+        $.ajax({
+            type: form.attr('method'),
+            //url: 'test',
+            url: 'create',
+            data: form.serialize()+'&action=createInfoPerso',
+
+            success: function(response) {
+                if (response.success) {
+                    alert("successfuly");
+                    form.reset();
+                }
+                if(response.exists){
+                alert("Merci de modifier");}
+                 if(response.errors) {
+                    alert(response.errors);
+                }
+            }
+        });
+    });
+
+// On enregistre le formualaire des informations sur les Formations
+ $('form').submit(function(event) {
+        event.preventDefault();
+        var form = $('#info-formation-form');
+        var formData = new FormData(form[0]);
+        $.ajax({
+            type: form.attr('method'),
+            //url: 'test',
+            url: 'create',
+            data: form.serialize()+'&action=createInfoFormation',
+
+            success: function(response) {
+                if (response.success) {
+                    alert("successfuly");
+                    form[0].reset()
+                }
+                if(response.exists){
+                alert("Merci de modifier");}
+                 if(response.errors) {
+                    alert(response.errors);
+                }
+            }
+        });
+    });
+
+ // On enregistre le formualaire des informations sur les Expereineces
+ $('form').submit(function(event) {
+        event.preventDefault();
+        var form = $('#info-experience-form');
+        var formData = new FormData(form[0]);
+        $.ajax({
+            type: form.attr('method'),
+            url: 'create',
+            data: form.serialize()+'&action=createInfoExpenrience',
+
+            success: function(response) {
+                if (response.success) {
+                    alert("successfuly");
+                    form[0].reset()
+                }
+                if(response.exists){
+                alert("Merci de modifier");}
+                 if(response.errors) {
+                    alert(response.errors);
+                }
+            }
+        });
+    });
+
+
+
+// On enregistre le formualaire des informations sur les Competences
+ $('form').submit(function(event) {
+        event.preventDefault();
+        var form = $('#info-competence-form');
+        var formData = new FormData(form[0]);
+        $.ajax({
+            type: form.attr('method'),
+            url: 'create',
+            data: form.serialize()+'&action=createInfoCompetence',
+
+            success: function(response) {
+                if (response.success) {
+                    alert("successfuly");
+                    form[0].reset()
+                }
+                if(response.exists){
+                alert("Merci de modifier");}
+                 if(response.errors) {
+                    alert(response.errors);
+                }
+            }
+        });
+    });
+
+
+// On enregistre le formualaire des informations sur les Langue Parlées
+ $('form').submit(function(event) {
+        event.preventDefault();
+        var form = $('#info-langue-form');
+        var formData = new FormData(form[0]);
+        $.ajax({
+            type: form.attr('method'),
+            url: 'create',
+            data: form.serialize()+'&action=createInfoLangue',
+
+            success: function(response) {
+                if (response.success) {
+                    alert("successfuly");
+                    form[0].reset()
+                }
+                if(response.exists){
+                alert("Merci de modifier");}
+                 if(response.errors) {
+                    alert(response.errors);
+                }
+            }
+        });
+    });
+
+
+// On enregistre le formualaire des informations sur les centre d'interets
+ $('form').submit(function(event) {
+        event.preventDefault();
+        var form = $('#info-centreInteret-form');
+        var formData = new FormData(form[0]);
+        $.ajax({
+            type: form.attr('method'),
+            url: 'create',
+            data: form.serialize()+'&action=createInfoCentreInteret',
+
+            success: function(response) {
+                if (response.success) {
+                    alert("successfuly");
+                    form[0].reset()
+                }
+                if(response.exists){
+                alert("Merci de modifier");}
+                 if(response.errors) {
+                    alert(response.errors);
+                }
+            }
+        });
+    });
+
+
+
+
+
+
+
+// FONCTION AFFICHER ET MASQUER UNE DIV
+function hideAndShowDiv(button_id,div_id) {
+    var toggleButton = document.getElementById(button_id);
+var myDiv = document.getElementById(div_id);
+var toggleIcon = toggleButton.querySelector(".myIcon");
+
+toggleButton.addEventListener("click", function() {
+   if (myDiv.classList.contains("d-none")) {
+      myDiv.classList.remove("d-none");
+      toggleIcon.classList.remove("fa-plus");
+      toggleIcon.classList.add("fa-minus");
+      toggleButton.textContent = "Masquer la div";
+   } else {
+      myDiv.classList.add("d-none");
+      toggleIcon.classList.remove("fa-minus");
+      toggleIcon.classList.add("fa-plus");
+      toggleButton.textContent = "Afficher la div";
+   }
+});
+}
+
+// Function pour afficher une masquer une div
+function hideDiv(div_id){
+    var myDiv = document.getElementById(div_id);
+    var toggleIcon = toggleButton.querySelector(".myIcon");
+
+      myDiv.classList.add("d-none");
+      toggleIcon.classList.remove("fa-minus");
+      toggleIcon.classList.add("fa-plus");
+      toggleButton.textContent = "Afficher la div";
+}
+
+</script>
+
+{% endblock %}

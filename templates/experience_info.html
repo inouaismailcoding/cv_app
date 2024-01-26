@@ -1,0 +1,307 @@
+{% extends 'layout.html' %}{% load static %} {% load widget_tweaks %}{% block content %}
+    <h1>MON PETIT BROUILLON</h1>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticExperienceFormModal">
+    NOUVELLE EXPERIENCE
+</button>
+  
+  <!-- Modal  For Creation Formation information-->
+<div class="modal fade" id="staticExperienceFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticFormationFormModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticExperienceFormModalLabel">AJOUTEZ UNE EXPERIENCE </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="form">
+      <div class="modal-body">
+          
+              <form method="post"  enctype="multipart/form-data" id="info-experience-form">
+                  {% csrf_token %}
+                  <div class="form-group mt-1">
+                    <label for="titre">Titre du poste</label>
+                      {{ experienceForm.titre|attr:"class:form-control"|attr:"Titre du poste" }}
+                  </div>
+                  <div class="form-group mt-1">
+                    <label for="entreprise">entreprise</label>
+                    {{ experienceForm.entreprise|attr:"class:form-control"|attr:"placeholder:Etablissement" }}
+                  </div>
+                  <div class="form-group mt-1">
+                    <label for="ville">Ville</label>
+                    {{ experienceForm.ville|attr:"class:form-control"|attr:"placeholder:Ville" }}
+                  </div>
+                  <div class="form-group mt-1">
+                    <label for="reference">Reference</label>
+                    {{ experienceForm.reference|attr:"class:form-control"|attr:"placeholder:Personne de Reference" }}
+                  </div>
+                  <div class="form-group mt-1">
+                    <label for="telephone_reference">Numero de Reference</label>
+                    {{ experienceForm.telephone_reference|attr:"class:form-control"|attr:"placeholder:Numero de reference" }}
+                  </div>
+                  <div class="d-flex mt-1">
+                    <div class="form-group me-1">
+                        <label for="debut">Date de debut</label>
+                      {{ experienceForm.debut|attr:"class:form-control"|attr:"type:date" }}
+                  </div>
+                  <div class="form-group me-1">
+                    <label for="fin">Date de fin</label>
+                      {{ experienceForm.fin|attr:"class:form-control"|attr:"type:date"}}
+                  </div>
+                  <div class="form-group">
+                    <input type="checkbox" name="checkbox" >
+                    <label for="checkbox">a nos jours</label>
+                  </div>
+                  </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                      {{ experienceForm.description|attr:"class:form-control"|attr:"placeholder:Description ou Commentaire"|attr:'rows:5' }}
+                  </div>
+                        </form>
+            
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="btn_create_experience_info">Enregistrer</button>
+          
+      </div>
+  </div> 
+    </div>
+  </div>
+</div>
+
+  <!-- Modal  For modification Formation information-->
+<div class="modal fade" id="staticEditExperienceFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticEditFormationFormModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticEditExperienceFormModalLabel">MODIFIER UNE FORMATION </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="form">
+      <div class="modal-body">
+              <form method="post"  enctype="multipart/form-data" id="edit-info-experience-form">
+                  {% csrf_token %}
+                  <div class="form-group mt-1">
+                      <label for="titre">Titre du poste</label>
+                      <input id="id_titre_experience_edit" class="form-control" type="text" name="titre" maxlength="250" placeholder="Diplome Obtenu">
+                  </div>
+                  <div class="form-group mt-1">
+                      <label for="entreprise">Entreprise ou etablissement</label>
+                      <input id="id_entreprise_experience_edit" class="form-control" type="text" name="entreprise" maxlength="100" placeholder="Etablissement Obtention">
+                  </div>
+                  <div class="form-group mt-1">
+                      <label for="ville">Ville de l'experience</label>
+                      <input id="id_ville_experience_edit" class="form-control" type="text" name="ville" maxlength="250" placeholder="Ville">
+                  </div>
+                  <div class="form-group mt-1">
+                    <label for="reference">Personne de Reference</label>
+                    <input id="id_reference_experience_edit" class="form-control" type="text" name="reference" maxlength="250" placeholder="Personne de Reference">
+                </div>
+                <div class="form-group mt-1">
+                  <label for="telephone_reference">Numero de Reference</label>
+                  <input id="id_telephone_reference_experience_edit" class="form-control" type="text" name="telephone_reference" maxlength="250" placeholder="Numero de Reference">
+              </div>
+                  <div class="d-flex mt-1">
+                    <div class="form-group">
+                        <label for="debut">Date Debut</label>
+                        <input id="id_debut_experience_edit" class="form-control" type="date" name="debut">​​
+                    </div>
+                    <div class="form-group">
+                        <label for="fin">Date fin</label>
+                        <input id="id_fin_experience_edit" class="form-control" type="date" name="fin">​​
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="checkbox">
+                        <label for="checkbox">à nos jours</label>
+                    </div>
+                  </div>
+                        <div class="form-group">
+                          <label for="description">Description</label>
+                          <textarea id="id_description_experience_edit" class="form-control" name="description" cols="40" rows="5" placeholder="Description ou Commentaire"></textarea>    
+                  </div>
+                  <input type="hidden" id="idEditExperienceInfo" name="id">
+                        </form>
+            
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="btn_edit_experience_info" >Enregistrer</button>
+          
+      </div>
+  </div> 
+    </div>
+  </div>
+</div>
+
+<!-- Modal  For Delete One Formation information-->
+<div class="modal fade" id="deleteExperienceFormModal" tabindex="-1" aria-labelledby="deleteExperienceFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteExperienceFormModalLabel">SUPPRIMER UNE EXPERIENCE</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h4 class="card-header">SOUHAITEZ VOUS SUPPRIMER CETTE ENREGISTREMENT</h4>
+          <div>
+            <input type="hidden" id="id_delete_experience_info">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" id="btn_delete_experience_info">Supprimer !</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+    <!-- AFFICHAGE DU RESPONSE JAVASCRIPT-- -->
+<div class="experience_info_data col-6" id="experience_info_data">
+      {% if experiences %}
+      {% for experience in experiences %}
+  
+          <div class="d-flex">
+              <div class="experience_info_data col-9 mx-2 me-3">
+                  <p class="card-header"><span class="text-info">{{experience.debut|date:"F Y"}}-{%if experience.fin %}{{experience.fin|date:"F Y"}}{%else%}à nos jours{%endif%}</span><br>
+                  <b class="text-primary">{{ experience.titre}}</b><br>
+  
+  
+                  <span>{{experience.entreprise}} situé a {{experience.ville}}</span><br>
+                  <small>{{experience.description}}</small>
+                </p>
+              </div>
+              <div class="col-3 mt-4">
+                  <a href="" type="button" class="fa fa-edit mx-1 me-1 btn_edit_experience" data-id="{{experience.id}}"  data-bs-target="#staticEditExperienceFormModal" data-bs-toggle="modal"></a>
+              <a href="" type="button" class="fa fa-trash text-danger mx-1 me-1 btn_delete_experience" data-id="{{experience.id}}" data-bs-target="#deleteExperienceFormModal" data-bs-toggle="modal"></a>
+              </div>
+          </div>
+  
+      {% endfor %}
+      {% endif %}
+</div>
+
+
+<script>
+  // EVENEMENT LORS DE LA CREATION D'UNE NOUVELLE INFO SUR L'EXPERIENCE PROFESSIONNELLE
+  $('#btn_create_experience_info').on('click',(e)=>{
+      e.preventDefault();
+      var form= $('#info-experience-form');
+      // On lance la requete ajax pour recuperer le formulaire
+      $.ajax({
+          url:'',
+          type:'POST',
+          data:form.serialize()+"&createExperienceInfo=createExperienceInfo",
+          success:(r)=>{
+              experiences=r.experiences
+              printExperienceDiv(experiences);
+              form[0].reset()
+              $('#staticExperienceFormModal').modal('hide');
+          }
+      });
+  });
+
+  // EVENEMENT LORQU'ON CLICK SUR LE FONT EDIT D'UNE FORMATION
+  // EVENEMENT LORS DE LA CREATION D'UNE NOUVELLE INFO SUR LA FORMATION
+  $('.btn_edit_experience').on('click',(e)=>{
+      e.preventDefault();
+      id_experience=e.currentTarget.dataset.id;
+      let form =$('#edit-info-experience-form');
+      $.ajax({
+          url:'',
+          type:'GET',
+          data:'id_experience='+id_experience+'&fetchOnExperience=fetchOnExperience',
+          success:(r)=>{ 
+              data=r.experience[0]
+              labelModal=document.getElementById('staticEditExperienceFormModalLabel');
+              // ON insert les données dans le formulaires
+              
+              labelModal.innerText='MODIFICATION EXPERIENCE N°:'+data.id;
+              $('#id_titre_experience_edit').val(data.titre);
+              $('#id_entreprise_experience_edit').val(data.entreprise);
+              $('#id_ville_experience_edit').val(data.ville);
+              $('#id_debut_experience_edit').val(data.debut);
+              $('#id_fin_experience_edit').val(data.fin);
+              $('#id_description_experience_edit').val(data.description);
+              $('#idEditExperienceInfo').val(data.id)
+              $('#id_telephone_reference_experience_edit').val(data.telephone_reference);
+              $('#id_reference_experience_edit').val(data.reference);
+          }
+      })
+  });
+
+  // EVENEMENT POUR ENREGISTRE LA MODIFICATION DANS LA TABLE
+  $('#btn_edit_experience_info').on('click',(e)=>{
+      e.preventDefault();
+      form=$('#edit-info-experience-form');
+      let myId=$('#idEditExperienceInfo').val();
+      var divResponse=document.getElementById('experience_info_data')
+      $.ajax({
+          url:'',
+          type:'POST',
+          data:form.serialize()+"&editExperienceInfo=editExperienceInfo",
+          success:(r)=>{
+            experiences=r.experiences;
+              printExperienceDiv(experiences);
+              $('#staticEditExperienceFormModal').modal('hide');
+          }
+      })
+
+  });
+
+  // EVENEMENT POUR AFFICHER UN ENREGISTREMENT A SUPPRIMER (FORMATION)
+  $('.btn_delete_experience').on('click',function(e){
+      e.preventDefault();
+      myId=e.currentTarget.dataset.id;
+      labelModal=document.getElementById('deleteExperienceFormModalLabel');
+      $('#id_delete_experience_info').val(myId);
+      
+      // ON insert les données dans le formulaires       
+      labelModal.innerText='SUPPRIMER EXPERIENCE N°:'+myId;
+      
+  });
+
+// EVENEMENT POUR SUPPRIMER UN ENREGISTREMENT
+ $('#btn_delete_experience_info').on('click',function(e){
+      e.preventDefault();
+      
+      id_experience=$('#id_delete_experience_info').val();
+      var divResponse=document.getElementById('experience_info_data');
+
+     $.ajax({
+      url:'',
+      type:'GET',
+      data:"id_experience="+id_experience+"&deleteOnExperience=deleteOnExperience",
+      success:(r)=>{
+        experiences=r.experiences
+        printExperienceDiv(experiences);
+        $('#deleteExperienceFormModal').modal('hide');
+            
+      }
+    });
+      
+  });
+
+// FUnction Pour afficher le contenu de la formation du sur la divResponse
+  function printExperienceDiv(data){
+    var divResponse=document.getElementById('experience_info_data');
+    divResponse.innerHTML="";
+    content="";
+    data.forEach((e)=>{
+    content+="<div class='card'><div class='d-flex'>";
+    content+="<div class='experience_info_data col-9 mx-2 me-3'>";
+    content+="<p class='card-header'><span class='text-info'>"+e.debut+" - "+e.fin+"</span><br>";
+    content+="<b class='text-primary'>"+e.titre+"</b><br>"
+    content+="<span>"+e.entreprise+" situé a "+e.ville+"</span><br><small>"+e.description+"</small></p></div>";
+    content+="<div class='col-3 mt-4'>";  
+    content+="<a href='' type='button' class='fa fa-edit mx-1 me-1 btn_edit_experience' data-id='"+e.id+"' data-bs-target='#staticEditExperienceFormModal'></a>"; 
+    content+="<a href='' type='button' class='fa fa-trash text-danger mx-1 me-1 btn_delete_experience' data-id='"+e.id+"' data-bs-target='#deleteExperienceFormModal'></a>"; 
+    content+="</div></div></div>";               
+
+    });
+    
+    divResponse.innerHTML=content;
+  }
+</script>
+{% endblock %}
+

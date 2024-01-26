@@ -1,0 +1,198 @@
+{%block content %}{% load static %}{% load widget_tweaks %}
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="{% static 'theme3.css'%}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'fontawesome-free-5.15.4/css/all.min.css'%}">
+
+</head>
+<button onclick="Convert_HTML_To_PDF();">Convert HTML to PDF</button>
+
+<div class="main" id="main">
+	<div class="left">
+		<br>
+		{% if img %}
+        <div class="profile-img"><img src="{{img.photo.url}}"></div>
+
+        {% else %}
+        <div class="profile-img"><img src="{% static 'image/images.jpg'%}"></div>
+
+        {% endif %}
+		<div class="box-1">
+			<div class="heading">
+				<p>CONTACT</p>
+			</div>
+			{% if cv %}
+            <p class="p1"><i class="fa fa-phone"></i>{{cv.telephone}}</p>
+			<p class="p1"><i class="fa fa-mail"></i>{{cv.email}}</p>
+            {% endif %}
+		</div>
+
+		<div class="box-1">
+			<div class="heading">
+				<p>LANGUAGES</p>
+			</div>
+
+			{% if langues %}
+            {% for langue in langues %}
+            <p class="p1">{{langue.langue}}
+                <div class="contentProgress">
+					<div class="progress-bar">
+						<div class="progress" style="height: 100%;background-color: #ddd;width: {{langue.niveau}}0%;transition: width 0.5s ease-in-out;">{% if langue.niveau <= 6 %}<i class="i"><small>Passable</small></i>{% elif langue.niveau == 7 %}<i class="i"><small>Bien</small></i>{% elif langue.niveau == 8 %}<i class="i"><small>Trés Bien</small></i>{% elif langue.niveau == 9 %}<i class="i"><small>Excellent</small></i>{% else %}<i class="i"><small>Parfait</small></i>{% endif %}
+						 </div>	
+					 </div> 
+				</div>
+            </p>
+    
+            {% endfor %}
+            {% endif%}
+		</div>
+		<br>
+
+		<div class="box-1">
+			<div class="heading">
+				<p>SKILLS</p>
+			</div>
+
+			{% if competences %}
+            {% for competence in competences %}
+            <p class="p1">{{competence.competence}}
+                <div class="contentProgress">
+					<div class="progress-bar">
+						<div class="progress" style="height: 100%;background-color: #ddd;width: {{competence.niveau}}0%;transition: width 0.5s ease-in-out;">{% if competence.niveau <= 6 %}<i class="i"><small>Passable</small></i>{% elif competence.niveau == 7 %}<i class="i"><small>Bien</small></i>{% elif competence.niveau == 8 %}<i class="i"><small>Trés Bien</small></i>{% elif competence.niveau == 9 %}<i class="i"><small>Excellent</small></i>{% else %}<i class="i"><small>Parfait</small></i>{% endif %}
+						 </div>	
+					 </div> 
+				</div>
+                </p>
+            {% endfor %}
+            {% endif %}
+		</div>
+		<br>
+		<div class="box-1">
+			<div class="heading">
+				<p>HOBBIES</p>
+			</div>
+
+			<div class="h-div">
+				{% if interets %}
+                {% for interet in interets %}
+                <i class="material-icons icons2">{{interet.titre}}</i>
+                {% endfor %}
+
+                {% endif %}
+				
+			</div>
+			
+		</div>
+
+	</div>
+
+
+	<div class="right">
+		<div class="name-div">
+			{% if cv %}
+            <h1>{{cv.nom}} {{cv.prenom}}</h1>
+
+            {% endif %}
+			{% if profileTitle%}
+            <p>{{profileTitle.titre}}</p>
+            {% endif %}
+		</div>
+
+		<div class="box-2">
+			<h2>ABOUT ME <i class="material-icons icons3" style="font-size: 28px!important; ">perm_identity</i></h2>
+			{% if profileTitle %}
+            <p class="p2">
+				<pre>{{profileTitle.profile}}</pre>
+			</p>
+            {% endif %}
+		</div>
+
+
+
+		<div class="box-2">
+			<h2>EDUCATION <i class="material-icons icons3" >border_color</i></h2>
+			{% if formations %}
+            {% for formation in formations %}
+            <p class="p3">{{formation.debut|date:"F Y"}}-{% if formation.fin %}{{formation.fin|date:"F Y"}}{%else %}à nos jours{% endif %} <span>{{formation.diplome}}</span></p>
+			<p class="pre">
+				<h6>{{formation.ecole}} situé à{{formation.ville}}</h6><br>
+				{% if formation.description %}
+				<pre>
+					{{formation.description}}
+				</pre>
+				{% endif %}
+			</p>
+			
+            {% endfor %}
+
+            {% endif %}
+		</div>
+
+
+		<div class="box-2">
+			<h2>WORK EXPERIENCE <i class="material-icons icons3" >folder</i></h2>
+			{% if experiences %}
+            {% for experience in experiences %}
+            <p class="p3">{{experience.debut|date:"F Y"}}-{% if experience.fin %}{{experience.fin|date:"F Y"}}{%else %}à nos jours{% endif %} <span>{{experience.titre}}</span></p>	
+				
+			<p class="pre">
+					<h6>{{experience.entreprise}} situé à{{experience.ville}}</h6><br>
+					<pre>
+						{{experience.description}}
+					</pre>
+			</p>
+			
+            {% endfor %}
+
+            {% endif %}
+
+			
+		</div>
+
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="{%static 'htmlCanvas.js'%}"></script>
+<script src="{%static 'jsPdf.js'%}"></script>
+
+<script>
+	
+		window.jsPDF = window.jspdf.jsPDF;
+		console.log(window.jspdf.jsPDF)
+// Convert HTML content to PDF
+function Convert_HTML_To_PDF() {
+    var doc = new jsPDF();
+	console.log(doc)
+    // Source HTMLElement or a string containing HTML.
+    var elementHTML = document.querySelector("#main");
+
+    doc.html(elementHTML, {
+        callback: function(doc) {
+            // Save the PDF
+            doc.save('document-html.pdf');
+        },
+        margin: [5, 5, 5, 5],
+        autoPaging: 'text',
+        x: 0,
+        y: 0,
+        width: 200, //target width in the PDF document
+        windowWidth: 780 //window width in CSS pixels
+    });
+}
+		
+</script>
+{% endblock %}

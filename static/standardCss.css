@@ -1,0 +1,354 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins',sans-serif;
+}
+body{
+    background: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.container{
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    background: #fff;
+    margin: 10px;
+    box-shadow: 0 50px 75px rgba(0, 0, 0, 0.1);
+    border-left: 25px solid  #fff;
+    border-right: 25px solid #fff;
+}
+
+.container .top{
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding: 25px;
+    padding-bottom: 0;
+}
+.container .top .imgBx{
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.container .top .imgBx .box{
+    position: relative;
+    width: 70%;
+    max-width: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    aspect-ratio: 1;
+}
+.container .top .imgBx .box img{
+    position: absolute;
+    top:0 ;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.container .top .profileText{
+    position: relative;
+    padding: 25px;
+    display: 40px;
+    align-items: left;
+}
+.container .contentBox .leftSide ul li span .text{
+    color: #3590d2;
+}
+.container .top .profileText h3{
+    font-size: 2em;
+    letter-spacing: 0.1em;
+    line-height:1.2em;
+    font-weight: 500;
+    color: #333;
+    text-align: center;
+    margin-bottom: 8px;
+}
+.container .top .profileText h3 span{
+    position: relative;
+    font-size: 0.5em;
+    font-weight: 300;
+    top: -10px;
+}
+.desc-p,pre{
+    font-size: 10px;
+	font-weight: 400;
+	letter-spacing: 1px;
+	word-spacing: 2px;
+	line-height: 18px;
+	margin-top: 5px;
+    word-wrap: break-word;
+}
+.container .contentBox{
+    position: relative;
+    min-height: 500px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding: 0 30px 30px ;
+}
+.container .contentBox h3{
+    border-left: 4px solid #ff8bb3;
+    padding-left: 10px;
+    line-height: 1em;
+    font-weight: 600;
+    color: #333;
+    letter-spacing: 0.1em;
+    margin-bottom: 20px  ;
+    margin-top: 25px;
+    
+}
+.container .contentBox ul{
+    position: relative;
+    margin: 10px 0;
+    list-style: none;
+}
+.container .contenBox ul li{
+    margin: 25px 0;
+    line-height: 1em;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+}
+.container .contentBox ul li ion-icon{
+    font-size: 1.2em;
+    margin-right: 10px;
+    color: #3590d2;
+}
+.container .contentBox ul .education{
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+.container .contenBox ul .education li
+{
+    flex-direction: column;
+    margin-left: 15px ;
+    
+
+}
+.li{
+    margin-top: 15px;
+}
+h5{
+    color: #3590d2;
+}
+h6{
+    color: #666;
+    font-weight: 200;
+    font-size: 0.8em;
+}
+h4{
+    color: #333;
+    font-weight: 400;
+    margin: 5px 0;
+}
+.language{
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+.language li{
+    flex-direction: column;
+}
+.language li span{
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+} 
+.language .percent{
+    position: relative;
+    width: 100%;
+    background: #e3e3e3;
+    height: 6px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 13px solid #fff;
+    display: block;
+    overflow: hidden;
+}
+.language .percent div{
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #3590d2;
+    border-radius: 13px solid #fff;
+}
+.container .contentBox ul.interest {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.container .contentBox ul.interest li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+/*.container .contentBox ul.interest li .icon{
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background: #3590d2;
+    color: #fff;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+
+.container .contentBox ul.interest li .icon ion-icon{
+    color: #fff;
+    margin-right: 0;
+}*/
+.container .contentBox ul.interest li .icon ion-icon{
+    color: #fff;
+    margin-right: 0;
+}
+.rightSide{
+    padding-left: 20px;
+    margin-left: 10px;
+}
+p{
+    font-style: 300;
+    word-wrap: break-word;
+}
+.p1{
+	padding: 9px 10px;
+	font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.profile{
+    margin-bottom: 20px;
+}
+.about .box{
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0;
+}
+.about .box .yearCompany{
+
+    width: 120px;
+    margin-bottom: 5px;
+
+}
+.about .box .yearCompany h5{
+    color: #333;
+    font-weight: 600;
+
+}
+.about .box .yearCompany h5:nth-child(1){
+    color: #3590d2;
+    font-size: 10px;
+}
+.about .box .text{
+    margin-left: 5px;
+}
+.about .box .text h4{
+    color:  #3590d2;
+    font-size: 16px;
+    margin: 0;
+    
+}
+.skills{
+    margin-top: 20px;
+}
+.about.skills .box{
+    
+    width: 100%;
+    align-items: center;
+}
+.about.skills .box h4{
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+
+.about.profile .pre-p{
+    font-family: cursive;
+    font-size: 12px;
+}
+
+.language .appreciation{
+    color: beige;
+    font-weight: 50;
+}
+.about .skills .contentProgress{
+    display: flex;
+    color: aqua;
+    margin-left: 40px;
+}
+.about .skills .contentProgress .progress-bar{
+    width: 400px;
+    height: 15px;
+    background-color: #333;
+    border-radius: 15px;
+    overflow: hidden;
+}
+.span{
+    color: white;
+    font-family: cursive;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    margin-top: -3px;
+        }
+
+.about .skills .contentProgress .progress-bar .i{
+       color: #ddd;
+    margin-bottom: 2px;
+    margin-top: -2px;
+    margin-left: 150px;
+    font-size: 10px;
+    text-align: center;
+    font-weight:bold;
+        }
+
+
+        .language .contentProgress{
+            display: flex;
+            color: aqua;
+            margin-left: 20px;
+        }
+        .language .contentProgress .progress-bar{
+            width: 150px;
+            height: 15px;
+            background-color: #333;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .language .contentProgress .span{
+            color: white;
+            font-family: cursive;
+            margin-left: 10px;
+            margin-bottom: 5px;
+            margin-top: -3px;
+                }
+        
+        .language .contentProgress .progress-bar .i{
+               color: #ddd;
+            margin-bottom: 2px;
+            margin-top: -2px;
+            margin-left: 50px;
+            font-size: 10px;
+            text-align: center;
+            font-weight:bold;
+                }
+
+
+
+
+
+
+
+
+
+
+
+

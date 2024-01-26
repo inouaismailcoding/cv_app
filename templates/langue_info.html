@@ -1,0 +1,266 @@
+{% extends 'layout.html'%}{% load static%}{% load widget_tweaks %}
+
+{% block content %}
+
+<h3>Langue Page </h3>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticLangueFormModal">
+    NOUVELLE LANGUE
+</button>
+
+
+  
+  <!-- Modal  For Creation Competence information-->
+<div class="modal fade" id="staticLangueFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticLangueFormModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticLangueFormModalLabel">AJOUTEZ UNE LANGUE </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="form">
+      <div class="modal-body">
+          
+              <form method="post"  enctype="multipart/form-data" id="info-langue-form">
+                  {% csrf_token %}
+                  <div class="form-group mt-1">
+                    <label for="langue">Langue</label>
+                      {{ langueForm.langue|attr:"class:form-control"|attr:"Langue parlée et ecrite" }}
+                  </div>
+                  <div class="form-group mt-1">
+                    <label for="niveau">Note/10</label>
+                    {{ langueForm.niveau|attr:"class:form-control"|attr:"placeholder:Note sur 10"|attr:'class:text-center' }}
+                  </div>
+                  
+                        </form>
+            
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="btn_create_langue_info">Enregistrer</button>
+          
+      </div>
+  </div> 
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal  For modification Competence information-->
+<div class="modal fade" id="staticEditLangueFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticEditLangueFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticEditLangueFormModalLabel">AJOUTEZ UNE FORMATION </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="form">
+        <div class="modal-body">
+                <form method="post"  enctype="multipart/form-data" id="edit-info-langue-form">
+                    {% csrf_token %}
+                    <div class="form-group mt-1">
+                        <label for="titre">Titre du poste</label>
+                        <input id="id_titre_langue_edit" class="form-control" type="text" name="langue" maxlength="240" placeholder="langue">
+                    </div>
+                    <div class="form-group mt-1">
+                        <label for="id_niveau">Note / 10</label>
+                        <select name="niveau" required id="id_niveau_langue_edit"class="form-control">
+                            <option value="" selected>---------</option>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                       
+                    </div>
+                    
+                    
+                      
+                      
+                    
+                    <input type="hidden" id="idEditLangueInfo" name="id">
+                          </form>
+              
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="btn_edit_langue_info" >Modifier</button>
+            
+        </div>
+    </div> 
+      </div>
+    </div>
+</div>
+
+
+<!-- Modal  For Delete One Competence information-->
+<div class="modal fade" id="deleteLangueFormModal" tabindex="-1" aria-labelledby="deleteLangueFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteLangueFormModalLabel">SUPPRIMER UNE EXPERIENCE</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h4 class="card-header">SOUHAITEZ VOUS SUPPRIMER CETTE ENREGISTREMENT</h4>
+          <div>
+            <input type="hidden" id="id_delete_langue_info">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" id="btn_delete_langue_info">Supprimer !</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+<!-- AFFICHAGE DU RESPONSE JAVASCRIPT-- -->
+<div class="langue_info_data col-6" id="langue_info_data">
+    {% if langues %}
+                    {% for langue in langues %}
+                    <div class='d-flex'>
+                        <div class='langue_data col-9 mx-2 me-3'>
+                            <h6 class='card-header'>{{langue.langue}}</h6>
+                            <div class='progress'>
+                                <div class='progress-bar w-50 bg-success' role='progressbar' aria-valuenow='50' aria-valuemin='0' aria-valuemax='100'></div>
+                            </div>
+                        </div>
+                        <div class='col-3 mt-4'>
+                            <a href="" type='button' class='fa fa-edit mx-1 me-1 btn_edit_langue' data-id='{{langue.id}}' data-bs-target="#staticEditLangueFormModal"  data-bs-toggle="modal"></a>
+                        <a href="" type='button' class='fa fa-trash text-danger mx-1 me-1 btn_delete_langue' data-id='{{langue.id}}' data-bs-toggle="modal"  data-bs-target="#deleteLangueFormModal"></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+</div>
+
+
+
+
+<script>
+// EVENEMENT LORS DE LA CREATION D'UNE NOUVELLE INFO SUR L'EXPERIENCE PROFESSIONNELLE
+    $('#btn_create_langue_info').on('click',(e)=>{
+        e.preventDefault();
+        var form= $('#info-langue-form');
+        // On lance la requete ajax pour recuperer le formulaire
+        $.ajax({
+            url:'',
+            type:'POST',
+            data:form.serialize()+"&createLangueInfo=createLangueInfo",
+            success:(r)=>{
+                langues=r.langues
+                printLangueDiv(langues);
+                form[0].reset()
+                $('#staticLangueFormModal').modal('hide');
+            }
+        });
+    });
+  
+    // EVENEMENT LORQU'ON CLICK SUR LE FONT EDIT D'UNE FORMATION
+    // EVENEMENT LORS DE LA CREATION D'UNE NOUVELLE INFO SUR LA FORMATION
+    $('.btn_edit_langue').on('click',(e)=>{
+        e.preventDefault();
+        id_langue=e.currentTarget.dataset.id;
+        let form =$('#edit-info-langue-form');
+        $.ajax({
+            url:'',
+            type:'GET',
+            data:'id_langue='+id_langue+'&fetchOnLangue=fetchOnLangue',
+            success:(r)=>{ 
+                data=r.langue[0]
+                labelModal=document.getElementById('staticEditLangueFormModalLabel');
+                // ON insert les données dans le formulaires
+                
+                labelModal.innerText='MODIFICATION LANGUE N°:'+data.id;
+                $('#id_titre_langue_edit').val(data.langue);
+                $('#id_niveau_langue_edit').val(data.niveau);
+               
+                $('#idEditLangueInfo').val(data.id)
+            }
+        })
+    });
+  
+    // EVENEMENT POUR ENREGISTRE LA MODIFICATION DANS LA TABLE
+    $('#btn_edit_langue_info').on('click',(e)=>{
+        e.preventDefault();
+        form=$('#edit-info-langue-form');
+        let myId=$('#idEditLangueInfo').val();
+        var divResponse=document.getElementById('langue_info_data')
+        $.ajax({
+            url:'',
+            type:'POST',
+            data:form.serialize()+"&editLangueInfo=editLangueInfo",
+            success:(r)=>{
+              langues=r.langues;
+                printLangueDiv(langues);
+                $('#staticEditLangueFormModal').modal('hide');
+            }
+        })
+  
+    });
+  
+    // EVENEMENT POUR AFFICHER UN ENREGISTREMENT A SUPPRIMER (FORMATION)
+    $('.btn_delete_langue').on('click',function(e){
+        e.preventDefault();
+        myId=e.currentTarget.dataset.id;
+        labelModal=document.getElementById('deleteLangueFormModalLabel');
+        $('#id_delete_langue_info').val(myId);
+        
+        // ON insert les données dans le formulaires       
+        labelModal.innerText='SUPPRIMER LANGUE N°:'+myId;
+        
+    });
+  
+  // EVENEMENT POUR SUPPRIMER UN ENREGISTREMENT
+   $('#btn_delete_langue_info').on('click',function(e){
+        e.preventDefault();
+        
+        id_langue=$('#id_delete_langue_info').val();
+        var divResponse=document.getElementById('langue_info_data');
+  
+       $.ajax({
+        url:'',
+        type:'GET',
+        data:"id_langue="+id_langue+"&deleteOnLangue=deleteOnLangue",
+        success:(r)=>{
+            langues=r.langues
+          printLangueDiv(langues);
+          $('#deleteLangueFormModal').modal('hide');
+              
+        }
+      });
+        
+    });
+  
+  // FUnction Pour afficher le contenu de la formation du sur la divResponse
+function printLangueDiv(data){
+      var divResponse=document.getElementById('langue_info_data');
+      divResponse.innerHTML="";
+      content="";
+      data.forEach((e)=>{
+      content+="<div class='d-flex'>";
+      content+="<div class='langue_data col-9 mx-2 me-3'>";
+      content+="<h6 class='card-header'>"+e.langue+"</h6>";
+      content+="<div class='progress'><div class='progress-bar w-50 bg-success' role='progressbar' aria-valuenow='50' aria-valuemin='0' aria-valuemax='100'></div>"
+      content+="</div></div><div class='col-3 mt-4'>";
+
+      content+="<a href='' type='button' class='fa fa-edit mx-1 me-1 btn_edit_langue' data-id='"+e.id+"' data-bs-target='#staticEditLangueFormModal' data-bs-toggle='modal'></a>"; 
+      content+="<a href='' type='button' class='fa fa-trash text-danger mx-1 me-1 btn_delete_langue' data-id='"+e.id+"' data-bs-target='#deleteLangueFormModal' data-bs-toggle='modal'></a>"; 
+      content+="</div></div>";               
+  
+      });
+      
+      divResponse.innerHTML=content;
+}
+
+</script>
+  {% endblock %}

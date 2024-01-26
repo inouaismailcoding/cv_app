@@ -1,0 +1,225 @@
+{%block content %}{% load static %}{% load widget_tweaks %}<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href=" {% static 'theme4.css' %}">
+   
+    <link rel="stylesheet" href="{% static 'fontawesome-free-5.15.4/css/all.min.css' %}">
+
+    <title>RESponsive Cv Using Html et Css</title>
+</head>
+<body>
+    <div class="button">
+        <button onclick="Convert_HTML_To_PDF();">Convert HTML to PDF</button>
+    </div>
+    <div class="resume-box" id="resume-box">
+        <div class="left_side">
+            <div class="profileText">
+                <div class="imgBox">
+                    {% if img %}
+                    <img src="{{img.photo.url}}" alt="">
+                    {% else %}
+                    <img src="{% static 'image/images.jpg' %}" alt="" alt="">     
+                    {% endif %}
+                    
+                </div>
+                {% if cv %}
+         
+            <h2>{{cv.nom|upper}} {{cv.prenom|upper}}<br><span>{{profileTitle.titre|capfirst}}</span></h2>
+            
+            {% else %}
+            <h2>FIRST AND LAST NAME <br><span>PROFILE TITLE</span></h2>
+            
+            {% endif %}
+               
+            </div>
+            <!-- BLOCK IN FORMATION PERSONNELLE-->
+            <div class="contact_info">
+                <h3 class="title">Contact Info</h3>
+                {% if cv %}
+                <ul>
+                    <li>
+                        <span class="icon"><i class="fa fa-phone-alt"></i></span>
+                        <span class="text" style="font-size: 13px;font-weight:500;">{{cv.telephone}}</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="fa fa-envelope"></i></span>
+                        <span class="text" style="font-size: 13px;font-weight:500;" >{{cv.email}}</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="fa fa-globe"></i></span>
+                        <span class="text">{{cv.status}}</span>
+                    </li>
+                   
+                    <li>
+                        <span class="icon"><i class="fa fa-map-marker"></i></span>
+                        <span class="text">{{cv.address}}</span>
+                    </li>
+                </ul>
+                {% else %}
+                <ul>
+                    <li>
+                        <span class="icon"><i class="fa fa-phone-alt"></i></span>
+                        <span class="text">00XXXXXXXXXXXXXX</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="fa fa-envelope"></i></span>
+                        <span class="text">example@gmail.com</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="fa fa-globe"></i></span>
+                        <span class="text">www.example.com</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="fa fa-linkedin-in"></i></span>
+                        <span class="text">www.linkedin.com/me</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="fa fa-map-marker"></i></span>
+                        <span class="text">address example</span>
+                    </li>
+                </ul>
+                {% endif %}
+            </div>
+            <!--  FIN BLOCK INFORMATION PERSONNNELLE -->
+
+            <!-- BLOCK INFORMATION EDUCATION -->
+            <div class="contact_info education">
+                <h3 class="title">Education </h3>
+                <ul>
+                    {% if formations %}
+                    {% for formation in formations %}
+                    <li>
+                        <h5>{{formation.debut|date:"M Y"}} - {% if formation.fin%}{{formation.fin|date:"M Y"}}{%else%}à nos jours{% endif %} </h5>
+                        <h4>{{formation.diplome}} </h4>
+                        <h5 style="font-weight: 400;color: #fff;">{{formation.ecole}}   <small style="color:dodgerblue;">   {{formation.ville}}</small></h5>
+                    </li>
+                    {% endfor %}
+               {% endif %}
+                   
+                </ul>
+            </div>
+            
+            <!-- END BLOCK EDUCATION INFORMATION -->
+
+            <!-- BLOCK INFORMATION LANGUAGE -->
+            <div class="contact_info language">
+                <h3 class="title">Language </h3>
+                {% if langues %}
+              
+                <ul>
+                    {% for langue in langues%}
+                    <li>
+                       <span class="text">{{langue.langue}}</span>
+                       <span class="percent">
+                        <div style="width: {{langue.niveau}}0%;">{% if langue.niveau <= 6 %}<i class="i"><small>Débutant</small></i>{% elif langue.niveau == 7 %}<i class="i"><small>Moyen</small></i>{% elif langue.niveau == 8 %}<i class="i"><small>Intermediaire</small></i>{% elif langue.niveau == 9 %}<i class="i"><small>Avancé</small></i>{% else %}<i class="i"><small>Expert</small></i>{% endif %}</div>
+                       </span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            <!-- END BLOCK EDUCATION LANGUAGE -->
+        </div>
+        <div class="right_side">
+            <!-- START RIGHT SIDE -->
+            <!-- START BLOCK PROFILE INFORMATION -->
+            <div class="about">
+                <h2 class="title2">Profile</h2>
+                {% if profileTitle %}
+                <p>{{profileTitle.profile}}</p>
+                {% else %}
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum impedit excepturi consequuntur commodi officia aliquam autem, aut perferendis in odit eligendi, dolor libero officiis quaerat mollitia. Dolores at accusamus cumque! <br> <br> Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi fugit error nam commodi sequi eos illum suscipit, nemo facere similique exercitationem consequatur, maiores ipsum accusamus natus consectetur, dolorem perspiciatis recusandae.</p>
+                {% endif %}
+            </div>
+
+            <!-- END BLOCK EDUCATION LANGUAGE -->
+            <!-- START BLOCK EXPERIENCE LANGUAGE -->
+            <div class="about">
+                <h2 class="title2">Experience</h2>
+                {% if experiences%}
+                {%for experience in experiences %}
+                <div class="box">
+                    
+                    <div class="year_company">
+                        <h5>{{experience.debut|date:"M Y"}} - {% if experience.fin%}{{experience.fin|date:"M Y"}}{%else%}Present{% endif %} </h5>
+                        <h5>{{experience.entreprise}}  <small style="color:dodgerblue;">   {{experience.ville}}</small></h5>
+                        {% if experience.reference %} <h5 style="color: #3590d2;">Ref : <small>{{experience.reference}} <br> N°: {{experience.telephone_reference}}</small></h5>
+                        {% endif %}
+                    </div>
+                    <div class="text">
+                        <h4>{{experience.titre}}</h4>
+                        <p>
+                            <pre>{{experience.description}}</pre>
+                        </p>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif%}
+                
+               
+            </div>
+             <!-- END BLOCK EXPERIENCE LANGUAGE -->
+
+             <!-- START BLOCK PROFFESSONNAL SKILLS INFORMATION -->
+                <div class="about skills">
+                    <h2 class="title2">Professionnal skill</h2>
+                    {% if competences %}
+                    {%for competence in competences %}
+                    <div class="box">
+                        <h5>{{competence.competence}}</h5>
+                        <div class="percent"> <div style="width: {{competence.niveau}}0%;">{% if competence.niveau <= 6 %}<i class="i"><small>Débutant</small></i>{% elif competence.niveau == 7 %}<i class="i"><small>Moyen</small></i>{% elif competence.niveau == 8 %}<i class="i"><small>Intermediaire</small></i>{% elif competence.niveau == 9 %}<i class="i"><small>Avancé</small></i>{% else %}<i class="i"><small>Expert</small></i>{% endif %}</div> </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+             <!-- END BLOCK PROFFESSONNAL SKILLS INFORMATION -->
+
+              <!-- START BLOCK INTEREST INFORMATION -->
+              <div class="about interest">
+                <h2 class="title2">Interest</h2>
+                {% if interets %}
+                <ul>
+                    
+                {% for interest in interets %}
+                    <li><i class="fa fa-gamepad"></i>{{interest.titre}}</li>
+                    {% endfor %}
+                    
+                </ul>
+                {% endif %}
+            </div>
+         <!-- END BLOCK INTEREST INFORMATION -->
+        </div>
+    </div>
+    <script src="{%static 'htmlCanvas.js'%}"></script>
+    <script src="{%static 'jsPdf.js'%}"></script>
+    
+    <script>
+        
+    window.jsPDF = window.jspdf.jsPDF;
+    // Convert HTML content to PDF
+    function Convert_HTML_To_PDF() {
+        var doc = new jsPDF();
+        console.log(doc)
+        // Source HTMLElement or a string containing HTML.
+        var elementHTML = document.querySelector("#resume-box");
+    
+        doc.html(elementHTML, {
+            callback: function(doc) {
+                // Save the PDF
+                doc.save('document-html.pdf');
+            },
+            margin: [5, 5, 5, 5],
+            autoPaging: 'text',
+            x: 0,
+            y: 0,
+            width: 145, //target width in the PDF document
+            windowWidth: 640 //window width in CSS pixels
+        });
+    }
+            
+    </script>
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,236 @@
+{% extends 'layout.html'%}{% load static%}{% load widget_tweaks %}
+
+{% block content %}
+
+<h3>Centre D'interet Page </h3>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticInteretFormModal">
+    NOUVEAU CENTRE D'INTERET
+</button>
+
+
+  
+  <!-- Modal  For Creation Competence information-->
+<div class="modal fade" id="staticInteretFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticInteretFormModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticInteretFormModalLabel">AJOUTEZ UNE LANGUE </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="form">
+      <div class="modal-body">
+          
+              <form method="post"  enctype="multipart/form-data" id="info-interet-form">
+                  {% csrf_token %}
+                  <div class="form-group mt-1">
+                    <label for="titre">Centre d'interet</label>
+                      {{ interetForm.titre|attr:"class:form-control"|attr:"Centre d'interet" }}
+                  </div>
+                  
+                  
+                        </form>
+            
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="btn_create_interet_info">Enregistrer</button>
+          
+      </div>
+  </div> 
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal  For modification Competence information-->
+<div class="modal fade" id="staticEditInteretFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticEditInteretFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticEditInteretFormModalLabel">MODIFIER UN CENTRE D' INTERET </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="form">
+        <div class="modal-body">
+                <form method="post"  enctype="multipart/form-data" id="edit-info-interet-form">
+                    {% csrf_token %}
+                    <div class="form-group mt-1">
+                        <label for="titre">Centre D'interet</label>
+                        <input id="id_titre_interet_edit" class="form-control" type="text" name="titre" maxlength="240" placeholder="Centre d'interet">
+                    </div>   
+                    <input type="hidden" id="idEditInteretInfo" name="id">
+                          </form>
+              
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="btn_edit_interet_info" >Modifier</button>
+            
+        </div>
+    </div> 
+      </div>
+    </div>
+</div>
+
+
+<!-- Modal  For Delete One Competence information-->
+<div class="modal fade" id="deleteInteretFormModal" tabindex="-1" aria-labelledby="deleteInteretFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteInteretFormModalLabel">SUPPRIMER UN CENTRE D'INTERET</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h4 class="card-header">SOUHAITEZ VOUS SUPPRIMER CETTE ENREGISTREMENT</h4>
+          <div>
+            <input type="hidden" id="id_delete_interet_info">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" id="btn_delete_interet_info">Supprimer !</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<!-- AFFICHAGE DU RESPONSE JAVASCRIPT-- -->
+<div class="interet_info_data col-6" id="interet_info_data">
+    {% if interets %}
+                    {% for interet in interets %}
+                    <div class='d-flex'>
+                        <div class='langue_data col-9 mx-2 me-3'>
+                            <h6 class='card-header'>{{interet.titre}}</h6>
+                        </div>
+                        <div class='col-3 mt-4'>
+                            <a href="" type='button' class='fa fa-edit mx-1 me-1 btn_edit_interet' data-id='{{interet.id}}' data-bs-target="#staticEditInteretFormModal"  data-bs-toggle="modal"></a>
+                        <a href="" type='button' class='fa fa-trash text-danger mx-1 me-1 btn_delete_interet' data-id='{{interet.id}}' data-bs-toggle="modal"  data-bs-target="#deleteInteretFormModal"></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+</div>
+
+
+
+
+<script>
+// EVENEMENT LORS DE LA CREATION D'UNE NOUVELLE INFO SUR L'EXPERIENCE PROFESSIONNELLE
+    $('#btn_create_interet_info').on('click',(e)=>{
+        e.preventDefault();
+        var form= $('#info-interet-form');
+        // On lance la requete ajax pour recuperer le formulaire
+        $.ajax({
+            url:'',
+            type:'POST',
+            data:form.serialize()+"&createInteretInfo=createInteretInfo",
+            success:(r)=>{
+                interets=r.interets
+
+                printInteretDiv(interets);
+                form[0].reset()
+                $('#staticInteretFormModal').modal('hide');
+            }
+        });
+    });
+  
+    // EVENEMENT LORQU'ON CLICK SUR LE FONT EDIT D'UNE FORMATION
+    // EVENEMENT LORS DE LA CREATION D'UNE NOUVELLE INFO SUR LA FORMATION
+    $('.btn_edit_interet').on('click',(e)=>{
+        e.preventDefault();
+        id_interet=e.currentTarget.dataset.id;
+        let form =$('#edit-info-interet-form');
+        $.ajax({
+            url:'',
+            type:'GET',
+            data:'id_interet='+id_interet+'&fetchOnInteret=fetchOnInteret',
+            success:(r)=>{ 
+                data=r.interet[0]
+                labelModal=document.getElementById('staticEditInteretFormModalLabel');
+                // ON insert les données dans le formulaires
+                
+                labelModal.innerText='MODIFICATION LANGUE N°:'+data.id;
+                $('#id_titre_interet_edit').val(data.titre);
+               
+                $('#idEditInteretInfo').val(data.id)
+            }
+        })
+    });
+  
+    // EVENEMENT POUR ENREGISTRE LA MODIFICATION DANS LA TABLE
+    $('#btn_edit_interet_info').on('click',(e)=>{
+        e.preventDefault();
+        form=$('#edit-info-interet-form');
+        let myId=$('#idEditInteretInfo').val();
+        var divResponse=document.getElementById('interet_info_data')
+        $.ajax({
+            url:'',
+            type:'POST',
+            data:form.serialize()+"&editInteretInfo=editInteretInfo",
+            success:(r)=>{
+              interets=r.interets;
+                printInteretDiv(interets);
+                $('#staticEditInteretFormModal').modal('hide');
+            }
+        })
+  
+    });
+  
+    // EVENEMENT POUR AFFICHER UN ENREGISTREMENT A SUPPRIMER (FORMATION)
+    $('.btn_delete_interet').on('click',function(e){
+        e.preventDefault();
+        myId=e.currentTarget.dataset.id;
+        labelModal=document.getElementById('deleteInteretFormModalLabel');
+        $('#id_delete_interet_info').val(myId);
+        
+        // ON insert les données dans le formulaires       
+        labelModal.innerText='SUPPRIMER CENTRE D\'INTERET N°:'+myId;
+        
+    });
+  
+  // EVENEMENT POUR SUPPRIMER UN ENREGISTREMENT
+   $('#btn_delete_interet_info').on('click',function(e){
+        e.preventDefault();
+        
+        id_interet=$('#id_delete_interet_info').val();
+        var divResponse=document.getElementById('interet_info_data');
+  
+       $.ajax({
+        url:'',
+        type:'GET',
+        data:"id_interet="+id_interet+"&deleteOnInteret=deleteOnInteret",
+        success:(r)=>{
+            interets=r.interets
+          printInteretDiv(interets);
+          $('#deleteInteretFormModal').modal('hide');
+              
+        }
+      });
+        
+    });
+  
+  // FUnction Pour afficher le contenu de la formation du sur la divResponse
+function printInteretDiv(data){
+      var divResponse=document.getElementById('interet_info_data');
+      divResponse.innerHTML="";
+      content="";
+      data.forEach((e)=>{
+      content+="<div class='d-flex'>";
+      content+="<div class='langue_data col-9 mx-2 me-3'>";
+      content+="<h6 class='card-header'>"+e.titre+"</h6></div>";
+      content+="<div class='col-3 mt-4'>";
+
+      content+="<a href='' type='button' class='fa fa-edit mx-1 me-1 btn_edit_langue' data-id='"+e.id+"' data-bs-target='#staticEditLangueFormModal' data-bs-toggle='modal'></a>"; 
+      content+="<a href='' type='button' class='fa fa-trash text-danger mx-1 me-1 btn_delete_langue' data-id='"+e.id+"' data-bs-target='#deleteLangueFormModal' data-bs-toggle='modal'></a>"; 
+      content+="</div></div>";               
+  
+      });
+      
+      divResponse.innerHTML=content;
+}
+
+</script>
+  {% endblock %}

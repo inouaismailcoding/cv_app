@@ -1,0 +1,1118 @@
+{% extends 'layout.html' %}{% load static %} {% load widget_tweaks %}{% block content %}
+<link rel="stylesheet" href="{% static 'cv.css' %}">
+
+    <h1 class="text-center text-upper mb-3">bienvenu a page de cv</h1>
+<section class="">   
+    <div class="lateral">
+        <!-- START END IMAGE PROFILE FORM -->
+        <div class="image">
+            <div class="image card-header">
+                <span class="header-items-left me-5 text-center" id="test">Image Profile</span>
+                <a class=" " href=" "><i class="fa fa-th-list text-dark header-items-right ms-5 " aria-hidden="true "></i></a>
+                <span class="fa fa-angle-down text-dark header-items-right p-2" id="headerImage"></span>
+
+
+            </div>
+            <div class="description-image " id="description_image">
+                <div class="image-items pb-5 ps-3 pe-3 mt-2">
+                    <div class="imgBx">
+                        
+                        <div class="box">
+                           
+                            {% if ProfileImg %}
+                            <img src="{{ProfileImg.photo.url}}" alt="" id="preview">
+                            {% else %}
+                            <img src="" alt="AUCUNE PHOTO" id="preview">
+                            {% endif %}
+                         
+                        </div>
+                     </div>
+                    <form method="POST" enctype="multipart/form-data" id="upload_image">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            
+                            {{ ProfileImgForm.photo|attr:"class:form-control" }}
+                        </div>
+                        <button type="submit" class="btn btn-primary">telecharger</button>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+                    
+        <!--  END IMAGE PROFILE FORM-->
+        <!-- START INFORMATION PERSONNELLE-->
+        <div class="info">
+            <div class="information card-header">
+                <span class="header-items-left" id="test">Information Personnelle </span>
+                <a class=" " href=" "><i class="fa fa-th-list text-dark header-items-right ms-5 " aria-hidden="true "></i></a>
+                <span class="fa fa-angle-down text-dark header-items-right p-2" id="headerInfoPersonnel"></span>
+            </div>
+            <div class="header_content_section " id="header_content_section">
+                <div class="infoPerso d-flex ">
+                    
+                    {% if CV %}
+                    <form method="post"  enctype="multipart/form-data" id="info-perso-form">
+                        {% csrf_token %}
+                        <div class="form-group mt-2">
+                            <label for="nom">Nom</label>
+                           <input id="id_nom_edit" class="form-control" type="text" name="nom" maxlength="100" placeholder="Nom de famille" value="{{CV.nom}}">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="prenom">Prenom</label>
+                            <input id="id_prenom_edit" class="form-control" type="text" name="prenom" maxlength="200" placeholder="Prenom" value="{{CV.prenom}}">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="email">Email</label>
+                            <input id="id_email_edit" class="form-control" type="email" name="email" maxlength="254" placeholder="Votre email" value="{{CV.email}}">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="telephone">Telephone</label>
+                            <input id="id_telephone_edit" class="form-control" type="text" name="telephone" maxlength="50" placeholder="Votre numéro de téléphone" value="{{CV.telephone}}">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="address">Address</label>
+                            <input id="id_address_edit" class="form-control" type="text" name="address" maxlength="250" placeholder="Votre adresse" value="{{CV.address}}">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="statut">Statut</label>
+                            {{form.status|attr:"class:form-control"}}
+                                 </div>
+                       
+                         <button type="submit" class="btn btn-primary mt-3" id="btn-info-perso-form">Up Date</button>
+                    </form>
+                    {% else %}
+                    <form method="post"  enctype="multipart/form-data" id="info-perso-form">
+                        {% csrf_token %}
+                        <div class="form-group mt-2">
+                            <label for="nom">Nom</label>
+                           <input id="id_nom" class="form-control" type="text" name="nom" maxlength="100" placeholder="Nom de famille">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="prenom">Prenom</label>
+                            <input id="id_prenom" class="form-control" type="text" name="prenom" maxlength="100" placeholder="Prenom">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="email">Email</label>
+                            <input id="id_email" class="form-control" type="email" name="email" maxlength="254" placeholder="Votre email">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="telephone">Telephone</label>
+                            <input id="id_telephone" class="form-control" type="text" name="telephone" maxlength="50" placeholder="Votre numéro de téléphone">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="address">Address</label>
+                            <input id="id_address" class="form-control" type="text" name="address" maxlength="250" placeholder="Votre adresse">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="status">Status</label>
+                            {{form.status|attr:"class:form-control"}}
+                                 </div>
+                       
+                         <button type="submit" class="btn btn-primary mt-3" id="btn-info-perso-form">Enregistrer</button>
+                    </form>
+                    
+                    {% endif %}
+                   
+                   
+                </div>
+
+            </div>
+
+        </div>
+        <!-- END  INFORMATION PERSONNELLE-->
+       
+        <!-- START Profile Title and text Texte -->
+        <div class="profil">
+            <div class="Profil card-header">
+                <span class="header-items-left me-5 text-center" id="test">profil</span>
+                <a class=" " href=" "><i class="fa fa-th-list text-dark header-items-right ms-5 " aria-hidden="true "></i></a>
+                <span class="fa fa-angle-down text-dark header-items-right p-2" id="headerProfil"></span>
+            </div>
+            <div class="description-profil" id="description_profil">
+    
+              
+              {% if ProfileTitle %}
+            <form method='POST' id="profile_form">
+               {% csrf_token %}
+               <input id="id_titre" class="form-control" type="text" name="titre" maxlength="240" placeholder="titre du poste" required="" value="{{ProfileTitle.titre}}">​​
+               <textarea id="id_profile" class="form-control" name="profile" cols="40" rows="5" placeholder="description profile" >{{ProfileTitle.profile}}</textarea>
+               <button type="submit" class="btn btn-primary mt-3">Modifier</button>
+           </form>
+              {% else %}
+            <form method='POST' id="profile_edit_form">
+               {% csrf_token %}
+               <input id="id_titre_profile_edit" class="form-control" type="text" name="titre" maxlength="240" placeholder="titre du poste" required="">​​
+               <textarea id="id_profile_profile_edit" class="form-control" name="profile" cols="40" rows="5" placeholder="description profile"></textarea>
+               <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
+            </form>
+              {% endif %}
+              
+            </div>
+        </div>
+        <!-- END Profile Title and text Texte FORM -->
+
+        <!-- START FORMATION FORM -->
+        <div class="formation mt-3 mb-3">
+                <div class="Profil card-header">
+                    <span class="header-items-left me-5 text-center" id="test">Formation</span>
+                    <a class=" " href=" "><i class="fa fa-th-list text-dark header-items-right ms-5 " aria-hidden="true "></i></a>
+                    <span class="fa fa-angle-down text-dark header-items-right p-2" id="headerFormation"></span>
+                </div>
+                <div class="description-formation " id="description_formation">
+                    <div class="d-flex">
+                        
+                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#staticFormationFormModal">Ajouter
+                            <span class="fa fa-plus mx-2 me-2"></span>
+                        </button>
+                    </div>
+
+                
+                <div class="formation_info_data" id="formation_info_data">
+                    {% if formations %}
+        {% for formation in formations %}
+
+            <div class="d-flex">
+                <div class="formation_info_data col-9 mx-2 me-3">
+                    <p class="card-header"><span class="text-info">{{formation.debut|date:"M Y"}}-{%if formation.fin %}{{formation.fin|date:"M Y"}}{%else%}à nos jours{%endif%}</span><br>
+                    <b class="text-primary">{{ formation.diplome}}</b><br>
+
+
+                    <span>{{formation.ecole}} situé a {{formation.ville}}</span><br>
+                    <small>{{formation.description}}</small>
+                    </p>
+                </div>
+                <div class="col-3 mt-4">
+                    <a href="" type="button" class="fa fa-edit mx-1 me-1 btn_edit_formation" data-id="{{formation.id}}" data-bs-toggle="modal" data-bs-target="#staticEditFormationFormModal"></a>
+                <a href="" type="button" class="fa fa-trash text-danger mx-1 me-1 btn_delete_formation" data-id="{{formation.id}}" data-bs-toggle="modal" data-bs-target="#deleteFormationFormModal"></a>
+                </div>
+            </div>
+
+        {% endfor %}
+        {% endif %}
+                </div>
+                </div>
+            </div>
+            <!-- END FORMATION INFO FORM -->
+
+            <!-- START EXPERIENCE INFO FORM-->
+            <div class="experience">
+                <div class="formation card-header ">
+                    <span class="header-items-left me-5 text-center" id="test">Experience Profesionnel</span>
+                    <a class=" " href=" "><i class="fa fa-th-list text-dark header-items-right ms-5 " aria-hidden="true "></i></a>
+                    <span class="fa fa-angle-down text-dark header-items-right p-2" id="headerExperience"></span>
+                </div>
+                <div class="description-experience " id="description_experience">
+                    <div class="experience-items  mt-2">
+                    <div class="form">
+                        <div class="d-flex">
+                        
+                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#staticExperienceFormModal">Ajouter
+                                <span class="fa fa-plus mx-2 me-2"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="experience_info_data" id="experience_info_data">
+                        {% if experiences %}
+        {% for experience in experiences %}
+    
+            <div class="d-flex">
+                <div class="experience_info_data col-9 mx-2 me-3">
+                    <p class="card-header"><span class="text-info">{{experience.debut|date:"F Y"}}-{%if experience.fin %}{{experience.fin|date:"F Y"}}{%else%}à nos jours{%endif%}</span><br>
+                    <b class="text-primary">{{ experience.titre}}</b><br>
+    
+    
+                    <span>{{experience.entreprise}} situé a {{experience.ville}}</span><br>
+                    <small>{{experience.description}}</small>
+                    </p>
+                </div>
+                <div class="col-3 mt-4">
+                    <a href="" type="button" class="fa fa-edit mx-1 me-1 btn_edit_experience" data-id="{{experience.id}}"  data-bs-target="#staticEditExperienceFormModal" data-bs-toggle="modal"></a>
+                <a href="" type="button" class="fa fa-trash text-danger mx-1 me-1 btn_delete_experience" data-id="{{experience.id}}" data-bs-target="#deleteExperienceFormModal" data-bs-toggle="modal"></a>
+                </div>
+            </div>
+    
+        {% endfor %}
+        {% endif %}
+                    </div>
+
+                        </div>
+                        </div>
+            </div>
+            <!--END EXPERIENCE INFO FORM-->
+        
+            <!-- START COMPETENCE INFO FORM-->
+            <div class="competence">
+                <div class="competence card-header">
+                    <span class="header-items-left me-5 text-center" id="test">Comptetence</span>
+                    <a class=" " href=" "><i class="fa fa-th-list text-dark header-items-right ms-5 " aria-hidden="true "></i></a>
+                    <span class="fa fa-angle-down text-dark header-items-right p-2" id="headerCompetence"></span>
+
+
+                </div>
+                <div class="description-competence " id="description_competence">
+                    <div class="competence-items  mt-2 pb-5 ps-3 pe-3">
+                        <div class="form">
+                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#staticCompetenceFormModal">Ajouter
+                                <span class="fa fa-plus mx-2 me-2"></span>
+                            </button>
+                    </div>
+                    <div class="competence_info_data" id="competence_info_data">
+                        {% if competences %}
+                        {% for competence in competences %}
+                        <div class='d-flex'>
+                            <div class='competence_data col-9 mx-2 me-3'>
+                                <h6 class='card-header'>{{competence.competence}}</h6>
+                                <div class='progress'>
+                                    <div class='progress-bar w-50 bg-success' role='progressbar' aria-valuenow='50' aria-valuemin='0' aria-valuemax='100'></div>
+                                </div>
+                            </div>
+                            <div class='col-3 mt-4'>
+                                <a href="" type='button' class='fa fa-edit mx-1 me-1 btn_edit_competence' data-id='{{competence.id}}' data-bs-target="#staticEditCompetenceFormModal"  data-bs-toggle="modal"></a>
+                            <a href="" type='button' class='fa fa-trash text-danger mx-1 me-1 btn_delete_competence' data-id='{{competence.id}}' data-bs-toggle="modal"  data-bs-target="#deleteCompetenceFormModal"></a>
+                            </div>
+                        </div>
+                        {% endfor %}
+        {% endif %}
+                    </div>
+                    </div>
+                </div>
+                
+            </div>
+            <!-- END COMPETENCE INFO FORM-->
+
+            <!-- START LANGUE INFO FORM-->
+            <div class="langue">
+                <div class="langue card-header">
+                    <span class="header-items-left me-5 text-center" id="test">LANGUE</span>
+                    <a class=" " href=" "><i class="fa fa-th-list text-dark header-items-right ms-5 " aria-hidden="true "></i></a>
+                    <span class="fa fa-angle-down text-dark header-items-right p-2" id="headerLangue"></span>
+                </div>
+                    <div class="description-langue " id="description_langue">
+                        <div class="langue-items pb-5 ps-3 pe-3 mt-2">
+                            <div class="form">
+                                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#staticLangueFormModal">Ajouter
+                                    <span class="fa fa-plus mx-2 me-2"></span>
+                                </button>
+                            </div>
+                            <div class="langue_info_data" id="langue_info_data">
+                                {% if langues %}
+                                {% for langue in langues %}
+                                <div class='d-flex'>
+                                    <div class='langue_data col-9 mx-2 me-3'>
+                                        <h6 class='card-header'>{{langue.langue}}</h6>
+                                        <div class='progress'>
+                                            <div class='progress-bar w-50 bg-success' role='progressbar' aria-valuenow='50' aria-valuemin='0' aria-valuemax='100'></div>
+                                        </div>
+                                    </div>
+                                    <div class='col-3 mt-4'>
+                                        <a href="" type='button' class='fa fa-edit mx-1 me-1 btn_edit_langue' data-id='{{langue.id}}' data-bs-target="#staticEditLangueFormModal"  data-bs-toggle="modal"></a>
+                                    <a href="" type='button' class='fa fa-trash text-danger mx-1 me-1 btn_delete_langue' data-id='{{langue.id}}' data-bs-toggle="modal"  data-bs-target="#deleteLangueFormModal"></a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                            </div>
+                    
+                        
+                    
+        </div>  
+        <!-- END LANGUE INFO FORM-->
+
+        <!-- START CENTRE D'INTERET-->
+        <div class="centreInteret">
+            <div class="interet card-header">
+                <span class="header-items-left me-5 text-center" id="test">CENTRE D'INTERET</span>
+                <a class=" " href=" "><i class="fa fa-th-list text-dark header-items-right ms-5 " aria-hidden="true "></i></a>
+                <span class="fa fa-angle-down text-dark header-items-right p-2" id="headerCentreInteret"></span>
+
+
+            </div>
+            <div class="description-centreInteret " id="description_centreInteret">
+                <div class="centreInteret-items pb-5 ps-3 pe-3 mt-2">
+                    <div class="form">
+                    
+                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#staticInteretFormModal">Ajouter
+                            <span class="fa fa-plus mx-2 me-2"></span>
+                        </button>
+                    </div>
+                    <div class="centreInteret_info_data mt-3" id="centreInteret_info_data">
+                        {% if interets %}
+                        {% for interet in interets %}
+                            <div class="d-flex">
+                                <div class="centreInteret_data col-9">
+                                    <button class="btn btn-info"><span class="fa fa-info mx-2 me-2"></span>{{interet.titre}}</button>
+                                    
+                                </div>
+                                <div class="col-3 mt-4">
+                                    <a type="button" class="fa fa-edit mx-1 me-1 btn_edit_interet" data-id="{{interet.id}}" data-bs-toggle="modal"  data-bs-target="#staticEditInteretFormModal"></
+                                    a>
+                                <a type="button" class="fa fa-trash text-danger mx-1 me-1 btn_delete_interet" data-id="{{interet.id}}" data-bs-toggle='modal'  data-bs-target="#deleteInteretFormModal" ></a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {% endif %}
+                     </div>
+                    </div>
+                
+            </div>
+        </div>
+                    
+        <!--  END CENTRE D'INTERET-->
+      
+        </div>
+    </div>
+    <div class="principal" >
+       <div class="my_content">
+            <div class="top">
+                <div class="imgBx">
+                    <div class="box">
+                        {% if ProfileImg %}
+                        <img src="{{ProfileImg.photo.url}}" alt="">
+                        {% else %}
+                        <img src="" alt="NO PHOTO" alt="">     
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="profileText">
+                    {% if CV and ProfileTitle %}
+                    <h3>{{CV.nom|upper}}   {{CV.prenom|upper}} <br> 
+                        <span class="profileTitle">{{ProfileTitle.titre|capfirst}}</span>
+                    </h3>
+                        
+                    {% else %}
+                    <h3>NOM   PRENOM <br> <span class="profileTitle">Profile Title</span></h3>
+                    
+                    {% endif %}
+                </div>
+            </div>
+            <div class="contentBox">
+                <div class="leftSide">
+                    <h3>Contact Info</h3>
+                    {% if CV %}
+                    <ul>
+                        <li>
+                            <span class="fa fa-phone"></span>
+                            <span class="text">{{CV.telephone}}</span>
+                        </li>
+                        <li>
+                            <span class="icon"></span>
+                            <span class="text">{{CV.email}}</span>
+                        </li>
+                        <li>
+                            <span class="icon"></span>
+                            <span class="text">{{CV.status}}</span>
+                        </li>
+                        <li>
+                            <span class="icon"></span>
+                            <span class="text">{{CV.address}}</span>
+                        </li>
+                    </ul>
+                    
+                    
+                    {% else %}
+                    <ul>
+                        <li>
+                            <span class="icon"><ion-icon name="call-outline"></ion-icon></span>
+                            <span class="text">00XXXXXXXXXXXXXX</span>
+                        </li>
+                        <li>
+                            <span class="icon"><ion-icon name="mail-outline"></ion-icon></span>
+                            <span class="text">example@gmail.com</span>
+                        </li>
+                        <li>
+                            <span class="icon"><ion-icon name="earth-outline"></ion-icon></span>
+                            <span class="text">www.example.com</span>
+                        </li>
+                        <li>
+                            <span class="icon"><ion-icon name="location-outline"></ion-icon></span>
+                            <span class="text">Nkomo el Dorado</span>
+                        </li>
+                    </ul>
+                    
+                    
+                    {% endif %}
+                    <h3>Education</h3>
+                    <ul class="education">
+                    {% if formations %}
+                    {% for formation in formations %}
+                    <li class="li">
+                        <h5>{{formation.debut|date:"M Y"}} - {% if formation.fin%}{{formation.fin|date:"M Y"}}{%else%}à nos jours{% endif %}</h5>
+                        <h4>{{formation.diplome}}</h4>
+                        <h6>{{formation.ecole}} situé à {{formation.ville}}</h6>
+                    </li>
+                    {% endfor %}
+                    {% endif %}
+                    </ul>
+                    <h3>Language</h3>
+                    <ul class="language">
+                    {% if langues %}
+                    {% for langue in langues%}
+                    <li> <p class="p1">{{langue.langue}}
+                        <div class="contentProgress">
+                            <div class="progress-bar">
+                                <div class="progress" style="height: 100%;background-color: #3590d2;width: {{langue.niveau}}0%;transition: width 0.5s ease-in-out;">{% if langue.niveau <= 6 %}<i class="i"><small>Debutant</small></i>{% elif langue.niveau == 7 %}<i class="i"><small>Moyen</small></i>{% elif langue.niveau == 8 %}<i class="i"><small>Intermediare</small></i>{% elif langue.niveau == 9 %}<i class="i"><small>Avancé</small></i>{% else %}<i class="i"><small>Expert</small></i>{% endif %}
+                                </div>	
+                            </div> 
+                        </div>
+                        </p>
+                    </li>
+                    {% endfor %}
+                    {% endif %}
+                        
+                    </ul>
+                    <h3>Interest</h3>
+                    <ul class="interest">
+                        {% if interets %}
+                        {% for interest in interets %}
+                        <li>
+                            <span class="icon"><ion-icon name="football-outline"></ion-icon></span>{{interest.titre}}</li>
+                            {% endfor %}
+                            {% endif %}
+                    </ul>
+                </div>
+                <div class="rightSide"> 
+                    <div class="about profile">
+                        <h3>profile</h3>
+                        {% if ProfileTitle %}
+                        <p class="desc-p">{{ProfileTitle.profile}}</p>
+                        {% else %}
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam at nisi sunt est. Ducimus maiores at tenetur, expedita dolorem illo voluptatem blanditiis nisi molestiae quia assumenda temporibus veniam deleniti mollitia?</p>
+                        {% endif %}
+                    </div>
+                    <div class="about">
+                        <h3>Experience</h3>
+                        {% if experiences%}
+                        {%for experience in experiences %}
+                        <div class="box">
+                            <div class="yearCompany">
+                                <h5>{{experience.debut|date:"M Y"}} - {% if experience.fin%}{{experience.fin|date:"M Y"}}{%else%}Présent{% endif %}</h5>
+                                <h5><small>{{experience.entreprise}} <br> situé à {{experience.ville}}</small></h5>
+                                {% if experience.reference %} <h5 style="color: #3590d2;">Ref : <small>{{experience.reference}} <br> N°: {{experience.telephone_reference}}</small></h5>
+                                {% endif %}
+                                </div>
+                            <div class="text">
+                                <h4>{{experience.titre}}</h4>
+                                <p class="desc-p"><pre>{{experience.description}}</pre></p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif%}
+                    
+                        <div class="about skills">
+                            <h3>Professional Skills</h3>
+                        {% if competences %}
+                        <ul>
+                        {% for competence in competences %}
+                            <li><p class="p1">{{competence.competence}}
+                                <div class="contentProgress">
+                                    <div class="progress-bar">
+                                        <div class="progress" style="height: 100%;background-color: #3590d2;width: {{competence.niveau}}0%;transition: width 0.5s ease-in-out;">{% if competence.niveau <= 6 %}<i class="i"><small>Débutant</small></i>{% elif competence.niveau == 7 %}<i class="i"><small>Moyen</small></i>{% elif competence.niveau == 8 %}<i class="i"><small>Intermediaire</small></i>{% elif competence.niveau == 9 %}<i class="i"><small>Avancé</small></i>{% else %}<i class="i"><small>Expert</small></i>{% endif %}
+                                        </div>	
+                                    </div> 
+                                </div>
+                            </p></li>
+                            
+                            
+                        {% endfor %}
+                        </ul>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>    
+       </div>
+        
+        
+   
+    </div>
+
+</section>
+
+
+
+
+
+  <!-- Modal  For Creation Formation information-->
+<div class="modal fade" id="staticFormationFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticFormationFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticFormationFormModalLabel">AJOUTEZ UNE FORMATION </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="form">
+        <div class="modal-body">
+            
+                <form method="post"  enctype="multipart/form-data" id="info-formation-form">
+                    {% csrf_token %}
+                    <div class="form-group mt-2">
+                        {{ formationForm.diplome|attr:"class:form-control"|attr:"placeholder:Diplome Obtenu" }}
+                    </div>
+                    <div class="form-group mt-2">
+                      {{ formationForm.ecole|attr:"class:form-control"|attr:"placeholder:Etablissement Obtention" }}
+                    </div>
+                    <div class="form-group mt-2">
+                      {{ formationForm.ville|attr:"class:form-control"|attr:"placeholder:Ville" }}
+                    </div>
+                    <div class="form-group mt-2">
+                        {{ formationForm.debut|attr:"class:form-control"|attr:"type:date" }}
+                    </div>
+                    <div class="form-group mt-2">
+                        {{ formationForm.fin|attr:"class:form-control"|attr:"type:date"}}
+                    </div>
+                          <div class="form-group mt-2">
+                        {{ formationForm.description|attr:"class:form-control"|attr:"placeholder:Description ou Commentaire" }}
+                    </div>
+                          </form>
+              
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="btn_create_formation_info" data-bs-dismiss="modal">Enregistrer</button>
+            
+        </div>
+    </div> 
+      </div>
+    </div>
+</div>
+
+  <!-- Modal  For modification Formation information-->
+  <div class="modal fade" id="staticEditFormationFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticEditFormationFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticEditFormationFormModalLabel">MODIFIER UNE FORMATION </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="form">
+        <div class="modal-body">
+                <form method="post"  enctype="multipart/form-data" id="edit-info-formation-form">
+                    {% csrf_token %}
+                    <div class="form-group mt-1">
+                        <label for="diplome">Diplome Obtenu</label>
+                        <input id="id_diplome_edit" class="form-control" type="text" name="diplome" maxlength="250" placeholder="Diplome Obtenu">
+                    </div>
+                    <div class="form-group mt-1">
+                        <label for="ecole">Etablissement Obtention</label>
+                        <input id="id_ecole_edit" class="form-control" type="text" name="ecole" maxlength="100" placeholder="Etablissement Obtention">
+                    </div>
+                    <div class="form-group mt-1">
+                        <label for="ville">Vlle Obtention</label>
+                        <input id="id_ville_edit" class="form-control" type="text" name="ville" maxlength="250" placeholder="Ville">
+                    </div>
+                    <div class="form-group">
+                        <label for="debut">Date Debut</label>
+                        <input id="id_debut_edit" class="form-control" type="date" name="debut">​​
+                    </div>
+                    <div class="form-group">
+                        <label for="fin">Date fin</label>
+                        <input id="id_fin_edit" class="form-control" type="date" name="fin">​​
+                                        </div>
+                          <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="id_description_edit" class="form-control" name="description" cols="40" rows="5" placeholder="Description ou Commentaire"></textarea>    
+                    </div>
+                    <input type="hidden" id="idEditFormationInfo" name="id">
+                          </form>
+              
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="btn_edit_formation_info" >Enregistrer</button>
+            
+        </div>
+    </div> 
+      </div>
+    </div>
+  </div>
+  
+      <!-- Modal  For Delete One Formation information-->
+<div class="modal fade" id="deleteFormationFormModal" tabindex="-1" aria-labelledby="deleteFormationFormModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteFormationFormModalLabel">SUPPRIMER FORMATION</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h4 class="card-header">SOUHAITEZ VOUS SUPPRIMER CETTE ENREGISTREMENT</h4>
+            <div>
+              <input type="hidden" id="id_delete_formation_info">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="btn_delete_formation_info">Supprimer !</button>
+          </div>
+        </div>
+      </div>
+</div>
+  
+  
+  
+  
+  
+    <!-- Modal  For Creation EXPERIENCE information-->
+<div class="modal fade" id="staticExperienceFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticFormationFormModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticExperienceFormModalLabel">AJOUTEZ UNE EXPERIENCE </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="form">
+    <div class="modal-body">
+        
+            <form method="post"  enctype="multipart/form-data" id="info-experience-form">
+                {% csrf_token %}
+                <div class="form-group mt-1">
+                    <label for="titre">Titre du poste</label>
+                    {{ experienceForm.titre|attr:"class:form-control"|attr:"Titre du poste" }}
+                </div>
+                <div class="form-group mt-1">
+                    <label for="entreprise">entreprise</label>
+                    {{ experienceForm.entreprise|attr:"class:form-control"|attr:"placeholder:Etablissement" }}
+                </div>
+                <div class="form-group mt-1">
+                    <label for="ville">Ville</label>
+                    {{ experienceForm.ville|attr:"class:form-control"|attr:"placeholder:Ville" }}
+                </div>
+                <div class="d-flex mt-1">
+                    <div class="form-group me-1">
+                        <label for="debut">Date de debut</label>
+                    {{ experienceForm.debut|attr:"class:form-control"|attr:"type:date" }}
+                </div>
+                <div class="form-group me-1">
+                    <label for="fin">Date de fin</label>
+                    {{ experienceForm.fin|attr:"class:form-control"|attr:"type:date"}}
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" name="checkbox" >
+                    <label for="checkbox">a nos jours</label>
+                </div>
+                </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                    {{ experienceForm.description|attr:"class:form-control"|attr:"placeholder:Description ou Commentaire"|attr:'rows:5' }}
+                </div>
+                        </form>
+            
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="btn_create_experience_info">Enregistrer</button>
+        
+    </div>
+</div> 
+    </div>
+</div>
+</div>
+  
+<!-- Modal  For modification EXPERIENCE information-->
+<div class="modal fade" id="staticEditExperienceFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticEditFormationFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticEditExperienceFormModalLabel">MODIFIER EXPERIENCE N° : </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="form">
+        <div class="modal-body">
+                <form method="post"  enctype="multipart/form-data" id="edit-info-experience-form">
+                    {% csrf_token %}
+                    <div class="form-group mt-1">
+                        <label for="titre">Titre du poste</label>
+                        <input id="id_titre_experience_edit" class="form-control" type="text" name="titre" maxlength="250" placeholder="Diplome Obtenu">
+                    </div>
+                    <div class="form-group mt-1">
+                        <label for="entreprise">Entreprise ou etablissement</label>
+                        <input id="id_entreprise_experience_edit" class="form-control" type="text" name="entreprise" maxlength="100" placeholder="Etablissement Obtention">
+                    </div>
+                    <div class="form-group mt-1">
+                        <label for="ville">Ville de l'experience</label>
+                        <input id="id_ville_experience_edit" class="form-control" type="text" name="ville" maxlength="250" placeholder="Ville">
+                    </div>
+                    <div class="d-flex mt-1">
+                      <div class="form-group">
+                          <label for="debut">Date Debut</label>
+                          <input id="id_debut_experience_edit" class="form-control" type="date" name="debut">​​
+                      </div>
+                      <div class="form-group">
+                          <label for="fin">Date fin</label>
+                          <input id="id_fin_experience_edit" class="form-control" type="date" name="fin">​​
+                      </div>
+                      <div class="form-group">
+                          <input type="checkbox" name="checkbox">
+                          <label for="checkbox">à nos jours</label>
+                      </div>
+                    </div>
+                          <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="id_description_experience_edit" class="form-control" name="description" cols="40" rows="5" placeholder="Description ou Commentaire"></textarea>    
+                    </div>
+                    <input type="hidden" id="idEditExperienceInfo" name="id">
+                          </form>
+              
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="btn_edit_experience_info" >Enregistrer</button>
+            
+        </div>
+    </div> 
+      </div>
+    </div>
+</div>
+  
+  <!-- Modal  For Delete One EXPERIENCE information-->
+  <div class="modal fade" id="deleteExperienceFormModal" tabindex="-1" aria-labelledby="deleteExperienceFormModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteExperienceFormModalLabel">SUPPRIMER UNE EXPERIENCE</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h4 class="card-header">SOUHAITEZ VOUS SUPPRIMER CETTE ENREGISTREMENT</h4>
+            <div>
+              <input type="hidden" id="id_delete_experience_info">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" id="btn_delete_experience_info">Supprimer !</button>
+          </div>
+        </div>
+      </div>
+  </div>
+  
+
+
+<!-- Modal  For Creation Competence information-->
+<div class="modal fade" id="staticCompetenceFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticCompetenceFormModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticCompetenceFormModalLabel">AJOUTEZ UNE COMPETENCE </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="form">
+        <div class="modal-body">
+            
+                <form method="post"  enctype="multipart/form-data" id="info-competence-form">
+                    {% csrf_token %}
+                    <div class="form-group mt-1">
+                      <label for="titre">Competence</label>
+                        {{ competenceForm.competence|attr:"class:form-control"|attr:"Titre Competence" }}
+                    </div>
+                    <div class="form-group mt-1">
+                      <label for="entreprise">Note/10</label>
+                      {{ competenceForm.niveau|attr:"class:form-control"|attr:"placeholder:Note sur 10"|attr:'class:text-center' }}
+                    </div>
+                    
+                          </form>
+              
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="btn_create_competence_info">Enregistrer</button>
+            
+        </div>
+    </div> 
+      </div>
+    </div>
+</div>
+  
+  
+  <!-- Modal  For modification Competence information-->
+<div class="modal fade" id="staticEditCompetenceFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticEditCompetenceFormModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticEditCompetenceFormModalLabel">AJOUTEZ UNE FORMATION </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="form">
+          <div class="modal-body">
+                  <form method="post"  enctype="multipart/form-data" id="edit-info-competence-form">
+                      {% csrf_token %}
+                      <div class="form-group mt-1">
+                          <label for="titre">Titre du poste</label>
+                          <input id="id_titre_competence_edit" class="form-control" type="text" name="competence" maxlength="240" placeholder="Competence">
+                      </div>
+                      <div class="form-group mt-1">
+                          <label for="id_niveau">Note / 10</label>
+                          <select name="niveau" required id="id_niveau_competence_edit"class="form-control">
+                              <option value="" selected>---------</option>
+                              <option value="0">0</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                          </select>
+                         
+                      </div>
+                      
+                      
+                        
+                        
+                      
+                      <input type="hidden" id="idEditCompetenceInfo" name="id">
+                            </form>
+                
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="btn_edit_competence_info" >Modifier</button>
+              
+          </div>
+      </div> 
+        </div>
+      </div>
+</div>
+  
+  
+  <!-- Modal  For Delete One Competence information-->
+<div class="modal fade" id="deleteCompetenceFormModal" tabindex="-1" aria-labelledby="deleteCompetenceFormModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteCompetenceFormModalLabel">SUPPRIMER UNE EXPERIENCE</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h4 class="card-header">SOUHAITEZ VOUS SUPPRIMER CETTE ENREGISTREMENT</h4>
+            <div>
+              <input type="hidden" id="id_delete_competence_info">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" id="btn_delete_competence_info">Supprimer !</button>
+          </div>
+        </div>
+      </div>
+</div>
+  
+  
+  
+
+  <!-- Modal  For Creation LAngue information-->
+  <div class="modal fade" id="staticLangueFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticLangueFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticLangueFormModalLabel">AJOUTEZ UNE LANGUE </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="form">
+        <div class="modal-body">
+            
+                <form method="post"  enctype="multipart/form-data" id="info-langue-form">
+                    {% csrf_token %}
+                    <div class="form-group mt-1">
+                      <label for="langue">Langue</label>
+                        {{ langueForm.langue|attr:"class:form-control"|attr:"Langue parlée et ecrite" }}
+                    </div>
+                    <div class="form-group mt-1">
+                      <label for="niveau">Note/10</label>
+                      {{ langueForm.niveau|attr:"class:form-control"|attr:"placeholder:Note sur 10"|attr:'class:text-center' }}
+                    </div>
+                    
+                          </form>
+              
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="btn_create_langue_info">Enregistrer</button>
+            
+        </div>
+    </div> 
+      </div>
+    </div>
+  </div>
+  
+  
+  <!-- Modal  For modification Langue information-->
+  <div class="modal fade" id="staticEditLangueFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticEditLangueFormModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticEditLangueFormModalLabel">AJOUTEZ UNE FORMATION </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="form">
+          <div class="modal-body">
+                  <form method="post"  enctype="multipart/form-data" id="edit-info-langue-form">
+                      {% csrf_token %}
+                      <div class="form-group mt-1">
+                          <label for="titre">Titre du poste</label>
+                          <input id="id_titre_langue_edit" class="form-control" type="text" name="langue" maxlength="240" placeholder="langue">
+                      </div>
+                      <div class="form-group mt-1">
+                          <label for="id_niveau">Note / 10</label>
+                          <select name="niveau" required id="id_niveau_langue_edit"class="form-control">
+                              <option value="" selected>---------</option>
+                              <option value="0">0</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                          </select>
+                         
+                      </div>
+                      
+                      
+                        
+                        
+                      
+                      <input type="hidden" id="idEditLangueInfo" name="id">
+                            </form>
+                
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="btn_edit_langue_info" >Modifier</button>
+              
+          </div>
+      </div> 
+        </div>
+      </div>
+  </div>
+  
+  
+  <!-- Modal  For Delete One Langue information-->
+  <div class="modal fade" id="deleteLangueFormModal" tabindex="-1" aria-labelledby="deleteLangueFormModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteLangueFormModalLabel">SUPPRIMER UNE EXPERIENCE</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h4 class="card-header">SOUHAITEZ VOUS SUPPRIMER CETTE ENREGISTREMENT</h4>
+            <div>
+              <input type="hidden" id="id_delete_langue_info">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" id="btn_delete_langue_info">Supprimer !</button>
+          </div>
+        </div>
+      </div>
+  </div>
+
+
+  <!-- Modal  For Creation Centre d'interet information-->
+  <div class="modal fade" id="staticInteretFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticInteretFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticInteretFormModalLabel">AJOUTEZ UNE LANGUE </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="form">
+        <div class="modal-body">
+            
+                <form method="post"  enctype="multipart/form-data" id="info-interet-form">
+                    {% csrf_token %}
+                    <div class="form-group mt-1">
+                      <label for="titre">Centre d'interet</label>
+                        {{ interetForm.titre|attr:"class:form-control"|attr:"Centre d'interet" }}
+                    </div>
+                    
+                    
+                          </form>
+              
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="btn_create_interet_info">Enregistrer</button>
+            
+        </div>
+    </div> 
+      </div>
+    </div>
+  </div>
+  
+  
+  <!-- Modal  For modification Competence information-->
+  <div class="modal fade" id="staticEditInteretFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticEditInteretFormModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticEditInteretFormModalLabel">MODIFIER UN CENTRE D' INTERET </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="form">
+          <div class="modal-body">
+                  <form method="post"  enctype="multipart/form-data" id="edit-info-interet-form">
+                      {% csrf_token %}
+                      <div class="form-group mt-1">
+                          <label for="titre">Centre D'interet</label>
+                          <input id="id_titre_interet_edit" class="form-control" type="text" name="titre" maxlength="240" placeholder="Centre d'interet">
+                      </div>   
+                      <input type="hidden" id="idEditInteretInfo" name="id">
+                            </form>
+                
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="btn_edit_interet_info" >Modifier</button>
+              
+          </div>
+      </div> 
+        </div>
+      </div>
+  </div>
+  
+  
+  <!-- Modal  For Delete One Competence information-->
+  <div class="modal fade" id="deleteInteretFormModal" tabindex="-1" aria-labelledby="deleteInteretFormModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteInteretFormModalLabel">SUPPRIMER UN CENTRE D'INTERET</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h4 class="card-header">SOUHAITEZ VOUS SUPPRIMER CETTE ENREGISTREMENT</h4>
+            <div>
+              <input type="hidden" id="id_delete_interet_info">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" id="btn_delete_interet_info">Supprimer !</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+  
+  
+  
+
+
+
+<script src="{% static 'cv.js' %}"></script>
+
+
+    {% endblock %}

@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link href="{% static 'css/bootstrap5.0.1.min.css'%}" rel="stylesheet" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/datatables-1.10.25.min.css'%}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'fontawesome-free-5.15.4/css/all.min.css' %}"
+    />
+    <link href="{% static 'style.css' %}" rel="stylesheet" />
+     <script src="{% static 'jquery.min.js' %}" text-javascript></script>
+     <title>{% block title%}{% endblock %}</title>
+  </head>
+  <body class="m-2">
+    <header class="">
+     
+
+      <nav
+        class="navbar navbar-expand-lg navbar-dark bg-dark mt-1 mb-3"
+        style="border-radius: 15px"
+      >
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{%  url 'welcome' %}">i&iCoding</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-mdb-toggle="collapse"
+            data-mdb-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                {% if request.user.id != None %}
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  href="{% url 'welcome' %}"
+                  >Home</a
+                >
+
+                
+              </li><!--
+
+              
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'formation_info' %}">Formation</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'experience_info' %}">Experience</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'competence_info' %}">Competence</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'langue_info' %}">Langue</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'centre_interet_info' %}">Centre Interet</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 's' %}">s</a>
+              </li>
+              -->
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'cv' %}">cv</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'theme1' %}">theme1</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'theme2' %}">theme2</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'theme3' %}">theme3</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'theme4' %}">theme4</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'theme5' %}">theme5</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'theme6' %}">theme6</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-info" href="{% url 'logout' %}" ><span class="fa fa-user mx-2 text-info"></span>{{request.user}}</a>
+              </li>
+              {% else  %}
+              <li class="nav-item p">
+                <a class="nav-link " href="{% url 'login' %}">Login</a>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <div class="container-fluid">{% block content %} {% endblock %}</div>
+    <!-- On charge les fichiers Javascript -->
+
+    <!--
+<script type="text/javascript" src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+-->
+
+    <!-- Remove the container if you want to extend the Footer to full width. -->
+
+    <!-- End of .container -->
+
+    <script src="{% static 'script.js' %}" text-javascript></script>
+    <script
+      src="{% static 'js/bootstrap.bundle.min.js' %}"
+      crossorigin="anonymous"
+    ></script>
+       {% block script %} {% endblock %}
+  </body>
+</html>

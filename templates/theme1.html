@@ -1,0 +1,225 @@
+
+
+{%block content %}{% load static %}{% load widget_tweaks %}
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'standardCss.css'%}"
+    />
+     <script src="{% static 'jquery.min.js' %}" text-javascript></script>
+  </head>
+
+  <button onclick="Convert_HTML_To_PDF();">Convert HTML to PDF</button>
+<div class="container" id="container">
+     <!-- start Top Element Image and profile text -->
+    <div class="top">
+        <div class="imgBx">
+            <div class="box">
+                {% if img %}
+                <img src="{{img.photo.url}}" alt="">
+                {% else %}
+                <img src="" alt="NO PHOTO" alt="">     
+                {% endif %}
+            </div>
+        </div>
+        <div class="profileText">
+            {% if cv %}
+            <h3>{{cv.nom|upper}}   {{cv.prenom|upper}} <br> <span class="profileTitle">{{profileTitle.titre|capfirst}}</span></h3>
+            
+            {% else %}
+            <h3>NOM   PRENOM <br> <span class="profileTitle"></span></h3>
+            
+            {% endif %}
+        </div>
+    </div>
+     <!-- End Top Element -->
+     <div class="contentBox">
+        <div class="leftSide">
+            <h3>Contact Info</h3>
+            {% if cv %}
+            <ul>
+                <li>
+                    <span class="fa fa-phone"></span>
+                    <span class="text">{{cv.telephone}}</span>
+                </li>
+                <li>
+                    <span class="icon"></span>
+                    <span class="text">{{cv.email}}</span>
+                </li>
+                <li>
+                    <span class="icon"></span>
+                    <span class="text">{{cv.status}}</span>
+                </li>
+                <li>
+                    <span class="icon"></span>
+                    <span class="text">{{cv.address}}</span>
+                </li>
+            </ul>
+            
+            
+            {% else %}
+            <ul>
+                <li>
+                    <span class="icon"><ion-icon name="call-outline"></ion-icon></span>
+                    <span class="text">00XXXXXXXXXXXXXX</span>
+                </li>
+                <li>
+                    <span class="icon"><ion-icon name="mail-outline"></ion-icon></span>
+                    <span class="text">example@gmail.com</span>
+                </li>
+                <li>
+                    <span class="icon"><ion-icon name="earth-outline"></ion-icon></span>
+                    <span class="text">www.example.com</span>
+                </li>
+                <li>
+                    <span class="icon"><ion-icon name="location-outline"></ion-icon></span>
+                    <span class="text">Nkomo el Dorado</span>
+                </li>
+            </ul>
+            
+            
+            {% endif %}
+           <h3>Education</h3>
+            <ul class="education">
+               {% if formations %}
+               {% for formation in formations %}
+               <li class="li">
+                   <h5>{{formation.debut|date:"M Y"}} - {% if formation.fin%}{{formation.fin|date:"M Y"}}{%else%}à nos jours{% endif %}</h5>
+                   <h4>{{formation.diplome}}</h4>
+                   <h6>{{formation.ecole}} situé à {{formation.ville}}</h6>
+               </li>
+               {% endfor %}
+               {% endif %}
+            </ul>
+            <h3>Language</h3>
+            <ul class="language">
+              {% if langues %}
+              {% for langue in langues%}
+              <li> <p class="p1">{{langue.langue}}
+                <div class="contentProgress">
+					<div class="progress-bar">
+						<div class="progress" style="height: 100%;background-color: #3590d2;width: {{langue.niveau}}0%;transition: width 0.5s ease-in-out;">{% if langue.niveau <= 6 %}<i class="i"><small>Debutant</small></i>{% elif langue.niveau == 7 %}<i class="i"><small>Moyen</small></i>{% elif langue.niveau == 8 %}<i class="i"><small>Intermediare</small></i>{% elif langue.niveau == 9 %}<i class="i"><small>Avancé</small></i>{% else %}<i class="i"><small>Expert</small></i>{% endif %}
+						 </div>	
+					 </div> 
+				</div>
+                </p>
+              </li>
+              {% endfor %}
+              {% endif %}
+                
+            </ul>
+            <h3>Interest</h3>
+            <ul class="interest">
+                {% if centreInterets %}
+                {% for interest in centreInterets %}
+                <li>
+                    <span class="icon"><ion-icon name="football-outline"></ion-icon></span>{{interest.titre}}</li>
+                    {% endfor %}
+                    {% endif %}
+          </ul>
+        </div>
+        <div class="rightSide"> 
+            <div class="about profile">
+                <h3>profile</h3>
+                {% if profileTitle %}
+                <p class="desc-p">{{profileTitle.profile}}</p>
+                {% else %}
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam at nisi sunt est. Ducimus maiores at tenetur, expedita dolorem illo voluptatem blanditiis nisi molestiae quia assumenda temporibus veniam deleniti mollitia?</p>
+                {% endif %}
+            </div>
+            <div class="about">
+                <h3>Experience</h3>
+                {% if experiences%}
+                {%for experience in experiences %}
+                <div class="box">
+                    <div class="yearCompany">
+                        <h5>{{experience.debut|date:"M Y"}} - {% if experience.fin%}{{experience.fin|date:"M Y"}}{%else%}Présent{% endif %}</h5>
+                        <h5><small>{{experience.entreprise}} <br> situé à {{experience.ville}}</small></h5>
+                        {% if experience.reference %} <h5 style="color: #3590d2;">Ref : <small>{{experience.reference}} <br> N°: {{experience.telephone_reference}}</small></h5>
+                        {% endif %}
+                           </div>
+                    <div class="text">
+                        <h4>{{experience.titre}}</h4>
+                        <p class="desc-p"><pre>{{experience.description}}</pre></p>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif%}
+               
+                <div class="about skills">
+                    <h3>Professional Skills</h3>
+                   {% if competences %}
+                   <ul>
+                   {% for competence in competences %}
+                    <li><p class="p1">{{competence.competence}}
+                        <div class="contentProgress">
+                            <div class="progress-bar">
+                                <div class="progress" style="height: 100%;background-color: #3590d2;width: {{competence.niveau}}0%;transition: width 0.5s ease-in-out;">{% if competence.niveau <= 6 %}<i class="i"><small>Débutant</small></i>{% elif competence.niveau == 7 %}<i class="i"><small>Moyen</small></i>{% elif competence.niveau == 8 %}<i class="i"><small>Intermediaire</small></i>{% elif competence.niveau == 9 %}<i class="i"><small>Avancé</small></i>{% else %}<i class="i"><small>Expert</small></i>{% endif %}
+                                 </div>	
+                             </div> 
+                        </div>
+                    </p></li>
+                    
+                    
+                   {% endfor %}
+                </ul>
+                   {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="{%static 'htmlCanvas.js'%}"></script>
+    <script src="{%static 'jsPdf.js'%}"></script>
+    
+    <script>
+        
+            window.jsPDF = window.jspdf.jsPDF;
+            console.log(window.jspdf.jsPDF)
+    // Convert HTML content to PDF
+    function Convert_HTML_To_PDF() {
+        var doc = new jsPDF();
+        console.log(doc)
+        // Source HTMLElement or a string containing HTML.
+        var elementHTML = document.querySelector("#container");
+    
+        doc.html(elementHTML, {
+            callback: function(doc) {
+                // Save the PDF
+                doc.save('document-html.pdf');
+            },
+            margin: [10, 10, 10, 10],
+            autoPaging: 'text',
+            x: 0,
+            y: 0,
+            width: 155, //target width in the PDF document
+            windowWidth: 650 //window width in CSS pixels
+        });
+    }
+            
+    </script>
+
+    {% endblock %}

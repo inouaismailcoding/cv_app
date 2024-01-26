@@ -1,0 +1,336 @@
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'theme6.css'%}"
+    />
+    <link rel="stylesheet" href="{% static 'fontawesome-free-5.15.4/css/all.min.css'%}">
+    
+  </head>
+  <button id='Convert_HTML_To_PDF'  onclick="">Convert HTML to PDF</button>
+  <div class="resume" id="resume">
+    <div class="resume_left">
+      <div class="resume_profile">
+        {% if img %}
+            <img src="{{img.photo.url}}" alt="Resume_image">
+            {% else %}
+            <img src="" alt="Resume_image" alt="">     
+            {% endif %}
+      </div>
+      <div class="resume_content">
+        <div class="resume_item resume_info">
+          <div class="title">
+            
+            {% if cv %}
+            <p class="bold" style="text-align: center;">{{cv.nom|upper}} {{cv.prenom|upper}}</p>
+           
+            {% endif %}
+            {% if profileTitle %}
+                <p class="regular" style="text-align: center;">{{profileTitle.titre|capfirst}}</p>
+                {% endif %}
+                
+          </div>
+          
+          {% if cv %}
+          <ul>
+            <li>
+                <div class="icon">
+                  <i class="fa fa-status"></i>
+                </div>
+                <div class="data">
+                  {{cv.status}}
+                </div>
+                
+            </li>
+            <li>
+              <div class="icon">
+                <i class="fa fa-map-signs"></i>
+              </div>
+              <div class="data">
+                {{cv.address}}
+              </div>
+            </li>
+            <li>
+              <div class="icon">
+                <i class="fas fa-mobile-alt"></i>
+              </div>
+              <div class="data">
+                {{cv.telephone}}
+              </div>
+            </li>
+            <li>
+              <div class="icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="data">
+                {{cv.email}}
+              </div>
+              
+            </li>
+           
+           <!-- <li>
+              <div class="icon">
+                <i class="fab fa-weebly"></i>
+              </div>
+              <div class="data">
+                www.stephen.com
+              </div>
+            </li>-->
+          </ul>
+          {% endif %}
+            
+        </div>
+        <div class="resume_item resume_skills">
+          <div class="title">
+            <p class="bold">skill's</p>
+          </div>
+          <ul>
+            
+            {% if competences %}
+                {% for competence in competences %}
+                <li>
+                    <div class="skill_name"><small class="b">{{competence.competence}}</small>
+                      
+                    </div>
+                    <div class="progress">
+                        <div class="skill_progress">
+                            <span style="width: {{competence.niveau}}0%;border-radius: 10px;"></span>
+                          </div>
+                          <div class="skill_per">{{competence.niveau}}0%</div>
+                    </div>
+                  </li>
+                
+                {% endfor %}
+            {% endif %}
+                
+            
+          </ul>
+        </div>
+
+        <div class="resume_item resume_languages">
+            <div class="title">
+              <p class="bold">Languages</p>
+            </div>
+            {% if langues %}
+            <ul>
+              
+             
+                  {% for langue in langues %}
+                  <li>
+                      <div class="skill_name"><small class="b">{{langue.langue}}</small>
+                        
+                      </div>
+                      <div class="progress">
+                          <div class="skill_progress">
+                              <span style="width: {{langue.niveau}}0%;border-radius: 10px;"></span>
+                            </div>
+                            <div class="skill_per">{{langue.niveau}}0%</div>
+                      </div>
+                    </li>
+                  
+                  {% endfor %}
+             
+                  
+              
+            </ul>
+            {% endif %}
+        </div>
+        {% if social %}
+        <div class="resume_item resume_social">
+          <div class="title">
+            <p class="bold">Social</p>
+          </div>
+         
+          <ul>
+           {% for social in socials %}
+           
+          
+          
+          <li>
+            <div class="icon">
+              <i class="fab fa-facebook-square"></i>
+            </div>
+            <div class="data">
+              <p class="semi-bold">Facebook</p>
+              <p>{{social.link}}@facebook</p>
+            </div>
+          </li>
+          <li>
+            <div class="icon">
+              <i class="fab fa-twitter-square"></i>
+            </div>
+            <div class="data">
+              <p class="semi-bold">Twitter</p>
+              <p>Stephen@twitter</p>
+            </div>
+          </li>
+          <li>
+            <div class="icon">
+              <i class="fab fa-youtube"></i>
+            </div>
+            <div class="data">
+              <p class="semi-bold">Youtube</p>
+              <p>Stephen@youtube</p>
+            </div>
+          </li>
+          <li>
+            <div class="icon">
+              <i class="fab fa-linkedin"></i>
+            </div>
+            <div class="data">
+              <p class="semi-bold">Linkedin</p>
+              <p>Stephen@linkedin</p>
+            </div>
+          </li>
+          {% endfor %}
+            
+           
+            
+            
+          </ul>
+          
+        </div>
+        {% endif %}
+
+      </div>
+   </div>
+   <div class="resume_right">
+     <div class="resume_item resume_about">
+         <div class="title">
+            <p class="bold">About us</p>
+          </div>
+         
+         {% if profileTitle %}
+         <p>{{profileTitle.profile}}</p>
+         {% endif %}
+            
+     </div>
+     <div class="resume_item resume_work">
+         <div class="title">
+            <p class="bold">Work Experience</p>
+          </div>
+         <ul>
+            
+            {% if experiences %}
+              {% for experience in experiences %}
+              <li>
+                <div class="date">{{experience.debut|date:"m/Y"}} - {% if experience.fin %}{{experience.fin|date:"m/Y"}}{%else%}Present{% endif %}</div> 
+                <div class="info">
+                     <p class="b">{{experience.titre}}</p> 
+                     <p class="semi-bold">{{experience.entreprise}}</p>
+                  <p><small><pre>{{experience.description}}</pre></small></p>
+                </div>
+            </li>
+              {% endfor %}  
+            {% endif %}
+         </ul>
+     </div>
+     <div class="resume_item resume_education">
+       <div class="title">
+            <p class="bold">Education</p>
+          </div>
+       <ul>
+             
+             {% if formations %}
+                {% for formation in formations %}
+                <li>
+                    <div class="date">{{formation.debut|date:"m/Y"}} - {% if formation.fin%}{{formation.fin|date:"m/Y"}}{%else%}Present{% endif %}</div> 
+                    <div class="info">
+                         <p class="b">{{formation.diplome}}</p> 
+                         <p>{{formation.ecole}}</p>
+                      <p><small>
+                       <pre>{{formation.description}}</pre>
+                      </small></p>
+                    </div>
+                </li>{% endfor %}
+             {% endif %}
+                
+             
+         </ul>
+     </div>
+     <div class="resume_item resume_hobby">
+       <div class="title">
+            <p class="bold">Hobby</p>
+          </div>
+        <ul>
+          <li><i class="fa fa-book"></i></li>
+          <li><i class="fa fa-gamepad"></i></li>
+          <li><i class="fa fa-music"></i></li>
+          <li><i class="fa fa-pagelines"></i></li>
+       </ul>
+     </div>
+   </div>
+ </div>
+ 
+
+
+ <script src="{% static 'jquery.min.js' %}" text-javascript></script>
+     <script src="{%static 'htmlCanvas.js'%}"></script>
+    <script src="{%static 'jsPdf.js'%}"></script>
+    <script src="{% static 'html2pdf.js'%}"></script>
+   <!--
+      <script>
+        window.jsPDF = window.jspdf.jsPDF;
+        // Convert HTML content to PDF
+        function Convert_HTML_To_PDF() {
+            var doc = new jsPDF();
+            // Source HTMLElement or a string containing HTML.
+            var elementHTML = document.querySelector("#resume");
+        
+            doc.html(elementHTML, {
+                callback: function(doc) {
+                    // Save the PDF
+                    doc.save('document-html.pdf');
+                },
+                margin: [5, 5, 5, 5],
+                autoPaging: 'auto',
+                x: 0,
+                y: 18,
+                width: 155, //target width in the PDF document
+                windowWidth: 650 //window width in CSS pixels
+            });
+        }
+                
+     </script>
+  -->
+
+
+     <script>
+      document.getElementById('Convert_HTML_To_PDF').addEventListener('click', function () {
+        // Sélectionner l'élément contenant le contenu à convertir en PDF
+        const content = document.getElementById('#resume');
+        
+        // Configuration de html2pdf.js
+        const pdfOptions = {
+            margin: 10,
+            filename: 'mon_document.pdf',
+            image: { type: 'jpeg', quality: 0.98 }, // Optionnel : capture des images
+            html2canvas: { scale: 2 }, // Optionnel : meilleure qualité pour les images
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+    
+        // Générer le PDF
+        html2pdf().from(content).set(pdfOptions).outputPdf().then(function (pdf) {
+            // Sauvegarder le PDF
+            const blob = new Blob([pdf], { type: 'application/pdf' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'mon_document.pdf';
+            link.click();
+        });
+    });
+    
+     </script>
+
+
+
+
+  {% endblock %}

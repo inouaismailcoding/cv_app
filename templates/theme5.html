@@ -1,0 +1,224 @@
+
+
+{% load static %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'theme5.css'%}"
+    />
+    <link rel="stylesheet" href="{% static 'fontawesome-free-5.15.4/css/all.min.css'%}">
+    
+  </head>
+  <button onclick="Convert_HTML_To_PDF();">Convert HTML to PDF</button>
+  
+
+<div class="resume_wrapper" id="resume_wrapper">
+    <div class="resume_left">
+        <div class="resume_image">
+            
+            {% if img %}
+            <img src="{{img.photo.url}}" alt="Resume_image">
+            {% else %}
+            <img src="" alt="Resume_image" alt="">     
+            {% endif %}
+        </div>
+        <div class="resume_bottom">
+            <div class="resume_item resume_namerole">
+                <div class="name">Rosie Jackson</div>
+                <div class="role">UI Designer</div>
+            </div>
+            <div class="resume_item resume_profile">
+                <div class="resume_title">Profile</div>
+                {% if profileTitle %}
+                <div class="resume_info">{{profileTitle.profile}}</div>
+                {% endif %}
+                
+            </div>
+            <div class="resume_item resume_address">
+                <div class="resume_title">Address</div>
+                
+                    
+                    {% if cv %}
+                    <div class="resume_info">{{cv.address}}</div>
+                    {% else %}
+                    <div class="resume_info"> 
+                        18th home,<br/>
+                        woods street,<br/>
+                        New York City, United States
+                    </div>
+                    {% endif %}
+                        
+                    
+            </div>
+            <div class="resume_item resume_contact">
+                <div class="resume_title">Contact</div>
+                <div class="resume_info">
+                    {% if cv %}
+                    <div class="resume_subtitle">Phone</div>
+                    <div class="resume_subinfo" style="font-size: 12px;font-weight:600;">{{cv.telephone}}</div>
+                    {% endif %}
+                    
+                </div>
+                <div class="resume_info">
+                    {% if cv %}
+                    <div class="resume_subtitle">Email</div>
+                    <div class="resume_subinfo" style="font-size: 13px;font-weight:700;">{{cv.email}}</div>
+                    {% endif %}
+                    
+                    
+                </div>
+            </div>
+            <div class="resume_item resume_skills resume_languagues">
+                <div class="resume_title">Languages</div>
+                <div class="resume_info">
+                    {% if langues %}
+                        {%for langue  in langues  %}
+                    <div class="skills_list">
+                        
+                        <div class="skills_left"><small>{{langue.langue}}</small></div>
+                        <div class="skills_bar">
+                            <p>
+                                <span style="width: {{langue.niveau}}0%;border-radius:10px;">{% if langue.niveau <= 6 %}<i class="i"><small>Débutant</small></i>{% elif langue.niveau == 7 %}<i class="i"><small>Moyen</small></i>{% elif langue.niveau == 8 %}<i class="i"><small>Intermediaire</small></i>{% elif langue.niveau == 9 %}<i class="i"><small>Avancé</small></i>{% else %}<i class="i"><small>Expert</small></i>{% endif %}</span>
+                            </p>
+                        </div>
+                        
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="resume_item resume_skills">
+                <div class="resume_title">Skills</div>
+                <div class="resume_info">
+                    {% if competences %}
+                        {%for competence  in competences  %}
+                    <div class="skills_list">
+                        
+                        <div class="skills_left" style="border:0.2px solid white;border-radius:5px;padding:5px;"><small>{{competence.competence}}</small></div>
+                        
+                        {% if competence.number == 10 %}
+                        <div class="skills_bar">
+                            <p>
+                                <span style="width: {{competence.niveau}}0%;border-radius:10px;">{% if competence.niveau <= 6 %}<i class="i"><small>Débutant</small></i>{% elif competence.niveau == 7 %}<i class="i"><small>Moyen</small></i>{% elif competence.niveau == 8 %}<i class="i"><small>Intermediaire</small></i>{% elif competence.niveau == 9 %}<i class="i"><small>Avancé</small></i>{% else %}<i class="i"><small>Expert</small></i>{% endif %}</span>
+                            </p>
+                        </div>
+                        {% endif %}
+                            
+                        
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="resume_right">
+        <div class="resume_item resume_namerole">
+            {% if cv %}
+                <div class="name" style="font-size:18px;text-align:center;word-spacing: 1.5px;font-weight: 800;">{{cv.nom|upper}} {{cv.prenom|upper}}</div>
+                {% endif %}
+                
+                {% if profileTitle %}
+                <div class="role" style="word-spacing:2px;text-align: center;font-size:14px;letter-spacing: 2px;">{{profileTitle.titre|capfirst}}</div>
+                {% endif %}
+            
+        </div>
+        <div class="resume_item resume_education">
+            <div class="resume_title">Education</div>
+            <div class="resume_info">
+                {% if formations %}
+                    {% for formation in formations %}
+                <div class="resume_data">
+                    <div class="year bold"><small>{{formation.debut|date:"m/Y"}} - {% if formation.fin%}{{formation.fin|date:"m/Y"}}{%else%}Present{% endif %}</small></div>
+                    <div class="content">
+                        <p class="bold" style="word-spacing: 2px;">{{formation.diplome}} </p>
+                        <p>{{formation.ecole}}  <small style="color:dodgerblue;">   {{formation.ville}}</small></p>
+                        <p><small><pre>{{formation.description}}</pre></small></p>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+               
+            </div>
+        </div>
+        <div class="resume_item resume_experience">
+            <div class="resume_title">Experience</div>
+            <div class="resume_info">
+                {% if experiences%}
+                {%for experience in experiences %}
+                <div class="resume_data">
+                    <div class="year bold"><small>{{experience.debut|date:"m/Y"}} - {% if experience.fin%}{{experience.fin|date:"m/Y"}}{%else%}Present{% endif %}</small></div>
+                    <div class="content">
+                        <p class="bold" style="word-spacing: 2px;">{{experience.titre}}</p>
+                        <p>{{experience.entreprise}}     <small style="color:dodgerblue;">   {{experience.ville}}</small></p>
+                        <p><small><pre>{{experience.description}}</pre></small></p>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif%}
+                
+            </div>
+        </div>
+        <div class="resume_item resmue_interests">
+            <div class="resume_title">Interests</div>
+            <div class="resume_info">
+                
+                {% if interets %}
+                {% for interest in interets %}
+                <div class="interests">
+                    <div class="int_icon">
+                        <i class="fa fa-volleyball-ball"></i>
+                    </div>
+                    <div class="int_data">{{interest.titre}}</div>
+                </div>
+
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+</div>
+    
+
+    
+
+
+
+
+ <!--- <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>-->
+     <script src="{% static 'jquery.min.js' %}" text-javascript></script>
+     <script src="{%static 'htmlCanvas.js'%}"></script>
+    <script src="{%static 'jsPdf.js'%}"></script>
+     <script>
+        window.jsPDF = window.jspdf.jsPDF;
+        // Convert HTML content to PDF
+        function Convert_HTML_To_PDF() {
+            var doc = new jsPDF();
+            // Source HTMLElement or a string containing HTML.
+            var elementHTML = document.querySelector("#resume_wrapper");
+        
+            doc.html(elementHTML, {
+                callback: function(doc) {
+                    // Save the PDF
+                    doc.save('document-html.pdf');
+                },
+                margin: [5, 5, 5, 5],
+                autoPaging: 'auto',
+                x: 0,
+                y: 11,
+                width: 155, //target width in the PDF document
+                windowWidth: 600 //window width in CSS pixels
+            });
+        }
+                
+     </script>
+{% endblock content %}
+    

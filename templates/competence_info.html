@@ -1,0 +1,267 @@
+{% extends 'layout.html'%}{% load static%}{% load widget_tweaks %}
+
+{% block content %}
+
+<h3>Competence Page </h3>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticCompetenceFormModal">
+    NOUVELLE COMPETENCE
+</button>
+
+
+  
+  <!-- Modal  For Creation Competence information-->
+<div class="modal fade" id="staticCompetenceFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticCompetenceFormModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticCompetenceFormModalLabel">AJOUTEZ UNE COMPETENCE </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="form">
+      <div class="modal-body">
+          
+              <form method="post"  enctype="multipart/form-data" id="info-competence-form">
+                  {% csrf_token %}
+                  <div class="form-group mt-1">
+                    <label for="titre">Competence</label>
+                      {{ competenceForm.competence|attr:"class:form-control"|attr:"Titre Competence" }}
+                  </div>
+                  <div class="form-group mt-1">
+                    <label for="entreprise">Note/10</label>
+                    {{ competenceForm.niveau|attr:"class:form-control"|attr:"placeholder:Note sur 10"|attr:'class:text-center' }}
+                  </div>
+                  
+                        </form>
+            
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="btn_create_competence_info">Enregistrer</button>
+          
+      </div>
+  </div> 
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal  For modification Competence information-->
+<div class="modal fade" id="staticEditCompetenceFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticEditCompetenceFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticEditCompetenceFormModalLabel">AJOUTEZ UNE FORMATION </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="form">
+        <div class="modal-body">
+                <form method="post"  enctype="multipart/form-data" id="edit-info-competence-form">
+                    {% csrf_token %}
+                    <div class="form-group mt-1">
+                        <label for="titre">Titre du poste</label>
+                        <input id="id_titre_competence_edit" class="form-control" type="text" name="competence" maxlength="240" placeholder="Competence">
+                    </div>
+                    <div class="form-group mt-1">
+                        <label for="id_niveau">Note / 10</label>
+                        <select name="niveau" required id="id_niveau_competence_edit"class="form-control">
+                            <option value="" selected>---------</option>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                       
+                    </div>
+                    
+                    
+                      
+                      
+                    
+                    <input type="hidden" id="idEditCompetenceInfo" name="id">
+                          </form>
+              
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="btn_edit_competence_info" >Modifier</button>
+            
+        </div>
+    </div> 
+      </div>
+    </div>
+</div>
+
+
+<!-- Modal  For Delete One Competence information-->
+<div class="modal fade" id="deleteCompetenceFormModal" tabindex="-1" aria-labelledby="deleteCompetenceFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteCompetenceFormModalLabel">SUPPRIMER UNE EXPERIENCE</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h4 class="card-header">SOUHAITEZ VOUS SUPPRIMER CETTE ENREGISTREMENT</h4>
+          <div>
+            <input type="hidden" id="id_delete_competence_info">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" id="btn_delete_competence_info">Supprimer !</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<!-- AFFICHAGE DU RESPONSE JAVASCRIPT-- -->
+<div class="competence_info_data col-6" id="competence_info_data">
+    {% if competences %}
+                    {% for competence in competences %}
+                    <div class='d-flex'>
+                        <div class='competence_data col-9 mx-2 me-3'>
+                            <h6 class='card-header'>{{competence.competence}}</h6>
+                            <div class='progress'>
+                                <div class='progress-bar w-50 bg-success' role='progressbar' aria-valuenow='50' aria-valuemin='0' aria-valuemax='100'></div>
+                            </div>
+                        </div>
+                        <div class='col-3 mt-4'>
+                            <a href="" type='button' class='fa fa-edit mx-1 me-1 btn_edit_competence' data-id='{{competence.id}}' data-bs-target="#staticEditCompetenceFormModal"  data-bs-toggle="modal"></a>
+                        <a href="" type='button' class='fa fa-trash text-danger mx-1 me-1 btn_delete_competence' data-id='{{competence.id}}' data-bs-toggle="modal"  data-bs-target="#deleteCompetenceFormModal"></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+    {% endif %}
+</div>
+
+
+
+
+<script>
+// EVENEMENT LORS DE LA CREATION D'UNE NOUVELLE INFO SUR L'EXPERIENCE PROFESSIONNELLE
+    $('#btn_create_competence_info').on('click',(e)=>{
+        e.preventDefault();
+        var form= $('#info-competence-form');
+        // On lance la requete ajax pour recuperer le formulaire
+        $.ajax({
+            url:'',
+            type:'POST',
+            data:form.serialize()+"&createCompetenceInfo=createCompetenceInfo",
+            success:(r)=>{
+                competences=r.competences
+                printCompetenceDiv(competences);
+                form[0].reset()
+                $('#staticCompetenceFormModal').modal('hide');
+            }
+        });
+    });
+  
+    // EVENEMENT LORQU'ON CLICK SUR LE FONT EDIT D'UNE FORMATION
+    // EVENEMENT LORS DE LA CREATION D'UNE NOUVELLE INFO SUR LA FORMATION
+    $('.btn_edit_competence').on('click',(e)=>{
+        e.preventDefault();
+        id_competence=e.currentTarget.dataset.id;
+        let form =$('#edit-info-competence-form');
+        $.ajax({
+            url:'',
+            type:'GET',
+            data:'id_competence='+id_competence+'&fetchOnCompetence=fetchOnCompetence',
+            success:(r)=>{ 
+                data=r.competence[0]
+                labelModal=document.getElementById('staticEditCompetenceFormModalLabel');
+                // ON insert les données dans le formulaires
+                
+                labelModal.innerText='MODIFICATION EXPERIENCE N°:'+data.id;
+                $('#id_titre_competence_edit').val(data.competence);
+                $('#id_niveau_competence_edit').val(data.niveau);
+               
+                $('#idEditCompetenceInfo').val(data.id)
+            }
+        })
+    });
+  
+    // EVENEMENT POUR ENREGISTRE LA MODIFICATION DANS LA TABLE
+    $('#btn_edit_competence_info').on('click',(e)=>{
+        e.preventDefault();
+        form=$('#edit-info-competence-form');
+        let myId=$('#idEditCompetenceInfo').val();
+        var divResponse=document.getElementById('competence_info_data')
+        $.ajax({
+            url:'',
+            type:'POST',
+            data:form.serialize()+"&editCompetenceInfo=editCompetenceInfo",
+            success:(r)=>{
+                competences=r.competences;
+                printCompetenceDiv(competences);
+                $('#staticEditCompetenceFormModal').modal('hide');
+            }
+        })
+  
+    });
+  
+    // EVENEMENT POUR AFFICHER UN ENREGISTREMENT A SUPPRIMER (FORMATION)
+    $('.btn_delete_competence').on('click',function(e){
+        e.preventDefault();
+        myId=e.currentTarget.dataset.id;
+        labelModal=document.getElementById('deleteCompetenceFormModalLabel');
+        $('#id_delete_competence_info').val(myId);
+        
+        // ON insert les données dans le formulaires       
+        labelModal.innerText='SUPPRIMER COMPETENCE N°:'+myId;
+        
+    });
+  
+  // EVENEMENT POUR SUPPRIMER UN ENREGISTREMENT
+   $('#btn_delete_competence_info').on('click',function(e){
+        e.preventDefault();
+        
+        id_competence=$('#id_delete_competence_info').val();
+        var divResponse=document.getElementById('competence_info_data');
+  
+       $.ajax({
+        url:'',
+        type:'GET',
+        data:"id_competence="+id_competence+"&deleteOnCompetence=deleteOnCompetence",
+        success:(r)=>{
+            competences=r.competences
+          printCompetenceDiv(competences);
+          $('#deleteCompetenceFormModal').modal('hide');
+              
+        }
+      });
+        
+    });
+  
+  // FUnction Pour afficher le contenu de la formation du sur la divResponse
+    function printCompetenceDiv(data){
+      var divResponse=document.getElementById('competence_info_data');
+      divResponse.innerHTML="";
+      content="";
+      data.forEach((e)=>{
+      content+="<div class='d-flex'>";
+      content+="<div class='competence_data col-9 mx-2 me-3'>";
+      content+="<h6 class='card-header'>"+e.competence+"</h6>";
+      content+="<div class='progress'><div class='progress-bar w-50 bg-success' role='progressbar' aria-valuenow='50' aria-valuemin='0' aria-valuemax='100'></div>"
+      content+="</div></div><div class='col-3 mt-4'>";
+
+      content+="<a href='' type='button' class='fa fa-edit mx-1 me-1 btn_edit_competence' data-id='"+e.id+"' data-bs-target='#staticEditCompetenceFormModal' data-bs-toggle='modal'></a>"; 
+      content+="<a href='' type='button' class='fa fa-trash text-danger mx-1 me-1 btn_delete_competence' data-id='"+e.id+"' data-bs-target='#deleteCompetenceFormModal' data-bs-toggle='modal'></a>"; 
+      content+="</div></div>";               
+  
+      });
+      
+      divResponse.innerHTML=content;
+    }
+</script>
+
+
+  {% endblock %}

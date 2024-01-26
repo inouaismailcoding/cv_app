@@ -1,0 +1,297 @@
+{% extends 'layout.html' %}{% load static %} {% load widget_tweaks %}{% block content %}
+    <h1>MON PETIT BROUILLON</h1>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticFormationFormModal">
+    NOUVELLE FORMATION
+</button>
+  
+  <!-- Modal  For Creation Formation information-->
+<div class="modal fade" id="staticFormationFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticFormationFormModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticFormationFormModalLabel">AJOUTEZ UNE FORMATION </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="form">
+      <div class="modal-body">
+          
+              <form method="post"  enctype="multipart/form-data" id="info-formation-form">
+                  {% csrf_token %}
+                  <div class="form-group mt-1">
+                    <label for="diplome">Diplome</label>
+                      {{ formationForm.diplome|attr:"class:form-control"|attr:"placeholder:Diplome Obtenu" }}
+                  </div>
+                  <div class="form-group mt-1">
+                    <label for="ecole">Ecole ou Etablissement</label>
+                    {{ formationForm.ecole|attr:"class:form-control"|attr:"placeholder:Etablissement Obtention" }}
+                  </div>
+                  <div class="form-group mt-1">
+                    <label for="ville">Ville</label>
+                    {{ formationForm.ville|attr:"class:form-control"|attr:"placeholder:Ville" }}
+                  </div>
+                  <div class="d-flex mt-1">
+                    <div class="form-group me-1">
+                      <label for="debut">Date Debut</label>
+                        {{ formationForm.debut|attr:"class:form-control"|attr:"type:date" }}
+                    </div>
+                    <div class="form-group me-1">
+                      <label for="fin">Date Fin</label>
+                        {{ formationForm.fin|attr:"class:form-control"|attr:"type:date"}}
+                    </div>
+                    <div class="form-group">
+                      <input type="checkbox" name="checkbox">
+                      <label for="checkbox">à nos jours</label>
+                    </div>
+                  </div>
+                        <div class="form-group mt-1">
+                          <label for="description">Description</label>
+                      {{ formationForm.description|attr:"class:form-control"|attr:"placeholder:Description ou Commentaire" |attr:"rows:5"}}
+                  </div>
+                        </form>
+            
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="btn_create_formation_info" data-bs-dismiss="modal">Enregistrer</button>
+          
+      </div>
+  </div> 
+    </div>
+  </div>
+</div>
+
+  <!-- Modal  For modification Formation information-->
+<div class="modal fade" id="staticEditFormationFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticEditFormationFormModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticEditFormationFormModalLabel">AJOUTEZ UNE FORMATION </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="form">
+      <div class="modal-body">
+              <form method="post"  enctype="multipart/form-data" id="edit-info-formation-form">
+                  {% csrf_token %}
+                  <div class="form-group mt-1">
+                      <label for="diplome">Diplome Obtenu</label>
+                      <input id="id_diplome_edit" class="form-control" type="text" name="diplome" maxlength="250" placeholder="Diplome Obtenu">
+                  </div>
+                  <div class="form-group mt-1">
+                      <label for="ecole">Etablissement Obtention</label>
+                      <input id="id_ecole_edit" class="form-control" type="text" name="ecole" maxlength="100" placeholder="Etablissement Obtention">
+                  </div>
+                  <div class="form-group mt-1">
+                      <label for="ville">Vlle Obtention</label>
+                      <input id="id_ville_edit" class="form-control" type="text" name="ville" maxlength="250" placeholder="Ville">
+                  </div>
+                  <div class="d-flex mt-1">
+                    <div class="form-group me-1">
+                      <label for="debut">Date Debut</label>
+                      <input id="id_debut_edit" class="form-control" type="date" name="debut">​​
+                  </div>
+                  <div class="form-group me-1">
+                      <label for="fin">Date fin</label>
+                      <input id="id_fin_edit" class="form-control" type="date" name="fin">​​
+                  </div>
+                  <div class="form-group">
+                    <input type="checkbox" name="checkbox">
+                    <label for="checkbox">à nos jours</label>
+                  </div>
+                  </div>
+                        <div class="form-group">
+                          <label for="description">Description</label>
+                          <textarea id="id_description_edit" class="form-control" name="description" cols="40" rows="5" placeholder="Description ou Commentaire"></textarea>    
+                  </div>
+                  <input type="hidden" id="idEditFormationInfo" name="id">
+                        </form>
+            
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="btn_edit_formation_info" >Modifier</button>
+          
+      </div>
+  </div> 
+    </div>
+  </div>
+</div>
+
+    <!-- Modal  For Delete One Formation information-->
+<div class="modal fade" id="deleteFormationFormModal" tabindex="-1" aria-labelledby="deleteFormationFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteFormationFormModalLabel">SUPPRIMER FORMATION</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h4 class="card-header">SOUHAITEZ VOUS SUPPRIMER CETTE ENREGISTREMENT</h4>
+          <div>
+            <input type="hidden" id="id_delete_formation_info">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" id="btn_delete_formation_info">Supprimer !</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- AFFICHAGE DU RESPONSE JAVASCRIPT-- -->
+<div class="formation_info_data col-6" id="formation_info_data">
+  {% if Formation %}
+  {% for formation in Formation %}
+
+      <div class='d-flex'>
+          <div class='formation_info_data col-9 mx-2 me-3'>
+              <p class='card-header'><span class='text-info'>{{formation.debut|date:'F Y'}}-{%if formation.fin %}{{formation.fin|date:'F Y'}}{%else%}à nos jours{%endif%}</span><br>
+              <b class='text-primary'>{{ formation.diplome}}</b><br>
+
+
+              <span>{{formation.ecole}} situé a {{formation.ville}}</span><br>
+              <small>{{formation.description}}</small>
+            </p>
+          </div>
+          <div class="col-3 mt-4">
+              <a href="" type="button" class="fa fa-edit mx-1 me-1 btn_edit_formation" data-id="{{formation.id}}" data-bs-toggle="modal" data-bs-target="#staticEditFormationFormModal"></a>
+          <a href="" type="button" class="fa fa-trash text-danger mx-1 me-1 btn_delete_formation" data-id="{{formation.id}}" data-bs-toggle="modal" data-bs-target="#deleteFormationFormModal"></a>
+          </div>
+      </div>
+
+  {% endfor %}
+  {% endif %}
+</div>
+
+
+
+
+
+
+
+<!-- JAVASCRIPT-->
+<script>
+    // EVENEMENT LORS DE LA CREATION D'UNE NOUVELLE INFO SUR LA FORMATION
+    $('#btn_create_formation_info').on('click',(e)=>{
+        e.preventDefault();
+        var form= $('#info-formation-form');
+        
+
+        // On lance la requete ajax pour recuperer le formulaire
+        $.ajax({
+            url:'',
+            type:'POST',
+            data:form.serialize()+"&createFormationInfo=createFormationInfo",
+            success:(r)=>{
+                formations=r.formations
+                printFormationDiv(formations);
+                form[0].reset()
+                $('#staticFormationFormModal').modal('hide');
+            }
+        });
+    });
+
+    // EVENEMENT LORQU'ON CLICK SUR LE FONT EDIT D'UNE FORMATION
+    // EVENEMENT LORS DE LA CREATION D'UNE NOUVELLE INFO SUR LA FORMATION
+    $('.btn_edit_formation').on('click',(e)=>{
+        e.preventDefault();
+        id_formation=e.currentTarget.dataset.id;
+        let form =$('#edit-info-formation-form');
+        $.ajax({
+            url:'',
+            type:'GET',
+            data:'id_formation='+id_formation+'&fetchOnFormation=fetchOnFormation',
+            success:(r)=>{ 
+                data=r.formation[0]
+                labelModal=document.getElementById('staticEditFormationFormModalLabel');
+                // ON insert les données dans le formulaires
+                
+                labelModal.innerText='MODIFICATION FORMATION N°:'+data.id;
+                $('#id_diplome_edit').val(data.diplome);
+                $('#id_ecole_edit').val(data.ecole);
+                $('#id_ville_edit').val(data.ville);
+                $('#id_debut_edit').val(data.debut);
+                $('#id_fin_edit').val(data.fin);
+                $('#id_description_edit').val(data.description);
+                $('#idEditFormationInfo').val(data.id)
+            }
+        })
+    });
+
+    // EVENEMENT POUR ENREGISTRE LA MODIFICATION DANS LA TABLE
+    $('#btn_edit_formation_info').on('click',(e)=>{
+        e.preventDefault();
+        form=$('#edit-info-formation-form');
+        let myId=$('#idEditFormationInfo').val();
+        var divResponse=document.getElementById('formation_info_data')
+        $.ajax({
+            url:'',
+            type:'POST',
+            data:form.serialize()+"&editFormationInfo=editFormationInfo",
+            success:(r)=>{
+                formations=r.formations;
+                printFormationDiv(formations);
+                $('#staticEditFormationFormModal').modal('hide');
+            }
+        })
+
+    });
+
+    // EVENEMENT POUR AFFICHER UN ENREGISTREMENT A SUPPRIMER (FORMATION)
+    $('.btn_delete_formation').on('click',function(e){
+        e.preventDefault();
+        myId=e.currentTarget.dataset.id;
+        labelModal=document.getElementById('deleteFormationFormModalLabel');
+        $('#id_delete_formation_info').val(myId);
+        
+        // ON insert les données dans le formulaires       
+        labelModal.innerText='SUPPRIMER FORMATION N°:'+myId;
+        
+    });
+
+  // EVENEMENT POUR SUPPRIMER UN ENREGISTREMENT
+   $('#btn_delete_formation_info').on('click',function(e){
+        e.preventDefault();
+        id_formation=$('#id_delete_formation_info').val();
+        var divResponse=document.getElementById('formation_info_data');
+
+       $.ajax({
+        url:'',
+        type:'GET',
+        data:"id_formation="+id_formation+"&deleteOnFormation=deleteOnFormation",
+        success:(r)=>{
+          formations=r.formations
+          printFormationDiv(formations);
+          $('#deleteFormationFormModal').modal('hide');
+              
+        }
+      });
+        
+    });
+  
+// FUnction Pour afficher le contenu de la formation du sur la divResponse
+    function printFormationDiv(data){
+      var divResponse=document.getElementById('formation_info_data');
+      divResponse.innerHTML="";
+      content="";
+      data.forEach((e)=>{
+      content+="<div class='card'><div class='d-flex'>";
+      content+="<div class='formation_info_data col-9 mx-2 me-3'>";
+      content+="<p class='card-header'><span class='text-info'>"+e.debut+" - "+e.fin+"</span><br>";
+      content+="<b class='text-primary'>"+e.diplome+"</b><br>"
+      content+="<span>"+e.ecole+" situé a "+e.ville+"</span><br><small>"+e.description+"</small></p></div>";
+      content+="<div class='col-3 mt-4'>";  
+      content+="<a href='' type='button' class='fa fa-edit mx-1 me-1 btn_edit_formation' data-id='"+e.id+"' data-bs-target='#staticEditFormationFormModal'></a>"; 
+      content+="<a href='' type='button' class='fa fa-trash text-danger mx-1 me-1 btn_delete_formation' data-id='"+e.id+"' data-bs-target='#deleteFormationFormModal'></a>"; 
+      content+="</div></div></div>";               
+ 
+      });
+      
+      divResponse.innerHTML=content;
+    }
+</script>
+
+{% endblock %}
+

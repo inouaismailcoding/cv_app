@@ -1,0 +1,224 @@
+{%block content %}{% load static %}{% load widget_tweaks %}
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="{% static 'theme2.css'%}">
+
+</head>
+<button onclick="Convert_HTML_To_PDF();">Convert HTML to PDF</button>
+<div class="resume-box" id="resume-box">
+	
+	<div class="left-section">
+		<div class="profile">
+		{% if img %}
+		<img src="{{img.photo.url}}" class="profile-img">
+		{% else %}
+		<img src="{% static 'image/images.jpg'%}" class="profile-img">
+		{% endif %}
+		<div class="blue-box"></div>
+		</div>
+		{% if cv %}
+		<h2 class="name">{{cv.nom|upper}}<br><span>{{cv.prenom|upper}}</span></h2>
+		<p class="n-p">{{profileTitle.titre}}</p>
+		{% else  %}
+		<h2 class="name">Nom<br><span>Prenom</span></h2>
+		<p class="n-p">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum molestias sed, vitae deleniti blanditiis neque eveniet saepe asperiores, est sequi labore aut quia fuga magni, eum repellendus expedita nam ducimus.</p>
+		{% endif %}
+
+
+		{% if cv %}
+		<div class="info">
+			<p class="heading">Info</p>
+			<p class="p1"><span class="span1"><img src="{% static 'image/location.png'%}"></span>Address<span> <br>{{cv.address}}</span></p>
+			<p class="p1"><span class="span1"><img src="{% static 'image/call.png'%}"></span>Phone<span> <br>{{cv.telephone}}</span></p>
+			<p class="p1"><span class="span1"><img src="{% static 'image/mail.png'%}"></span>Email<span><br>{{cv.email}}</span></p>
+
+		</div>
+		{% else %}
+		<div class="info">
+			<p class="heading">Info</p>
+			<p class="p1"><span class="span1"><img src="{% static 'image/location.png'%}"></span>Address<span> <br>address example BP Ville</span></p>
+			<p class="p1"><span class="span1"><img src="{% static 'image/call.png'%}"></span>Phone<span> <br>0033XXXXXXXXXX</span></p>
+			<p class="p1"><span class="span1"><img src="{% static 'image/mail.png'%}"></span>Email<span><br>example.mail.com</span></p>
+			<p class="p1"><span class="span1"><img src="{% static 'image/domain.png'%}"></span>Website<span> <br>www.example.com</span></p>
+		</div>
+		{% endif %}
+
+		{% if social %}
+		<div class="info">
+			<p class="heading">Social</p>
+			<p class="p1"><span class="span1"><img src="{% static 'image/skype.png' %}"></span>Skype<span> <br>skype/example.com</span></p>
+			<p class="p1"><span class="span1"><img src="{% static 'image/twitter.png' %}"></span>Twitter<span> <br>twitter/example.com</span></p>
+			<p class="p1"><span class="span1"><img src="{% static 'image/linkedin.png' %}"></span>Linkdin<span> <br>linkdin/example.com</span></p>
+			<p class="p1"><span class="span1"><img src="{% static 'image/facebook.png' %}"></span>Facebook<span> <br>facebook/example.com</span></p>
+		</div>
+		{% else %}
+		{% if centreInterets %}
+		<div class="info">
+			<p class="heading">Interet</p>
+			{%for interet in centreInterets %}
+			<span class="i-span"></span><p class="p1"><span> {{interet.titre}}</span></p>
+			
+			{% endfor %}
+		</div>
+		{% endif %}
+		{% endif %}
+
+        <div class="info">
+            <p class="heading">Langue</p>
+           {% if langues %}
+		   {% for langue in langues %}
+		   <div class="l-box">
+			   <h5 class="p6-l"style='color:#ddd;text-center;font-weight:bold;'>{{langue.langue}}</h5>
+			   <div style="margin-left:35px;" class="">
+				   <div class="contentProgress">
+					   <div class="progress-bar">
+						   <div class="progress" style="height: 100%;background-color: #2fb7fe;width: {{langue.niveau}}0%;transition: width 0.5s ease-in-out;">{% if langue.niveau <= 6 %}<i class="i"><small>Débutant</small></i>{% elif langue.niveau == 7 %}<i class="i"><small>Moyen</small></i>{% elif langue.niveau == 8 %}<i class="i"><small>Intermediaire</small></i>{% elif langue.niveau == 9 %}<i class="i"><small>Avancé</small></i>{% else %}<i class="i"><small>Expert</small></i>{% endif %}
+							</div>	
+						</div> 
+					</div>
+			   </div>
+			   
+		   </div>
+		   {% endfor %}
+		   {% endif %}
+        </div>
+
+	</div>
+
+	<div class="right-section">
+		<div class="right-heading">
+			<img src="{% static 'image/user.png' %}">
+			<p class="p2">Profile</p>
+		</div>
+		<p class="p3" style="word-spacing: 1px;">{{profileTitle.profile}}</p>
+
+		<div class="clearfix"></div>
+		<br><br>
+		<div class="right-heading">
+			<img src="{% static 'image/pencil.png' %}">
+			<p class="p2">Work Experience</p>
+		</div>
+		<div class="clearfix"></div>
+		
+		{% for experience in experiences %}
+        <div class="lr-box">
+            <div class="left">
+                <p class="p4">{{experience.debut|date:"M Y"}} - <br> {%if experience.fin %}{{experience.fin|date:"M Y"}}{%else%}Present{% endif %}</p>
+                
+				{% if experience.reference %} <p style="color: #3590d2;">Ref: <b><small>{{experience.reference}}</b> <br> N°: <b>{{experience.telephone_reference}}</b></small></p>
+                        {% endif %}
+            </div>
+		<div class="right">
+			<p class="p4">{{experience.titre}} </p>
+			<p class="">{{experience.entreprise}} <small style="color: #2fb7fe">{{experience.ville}}</small></p>
+			<p class="p5"><pre>{{experience.description}}</pre></p>
+			
+		</div>
+		<div class="clearfix"></div>
+		</div>
+        {% endfor %}
+
+		<div class="right-heading">
+			<img src="{% static 'image/edu.png' %}">
+			<p class="p2">Education</p>
+		</div>
+		<div class="clearfix"></div>
+		{% for formation in formations %}
+        <div class="lr-box">
+            <div class="left">
+                <p class="p4">{{formation.debut|date:"M Y"}} - <br>{%if formation.fin %}{{formation.fin|date:"M Y"}}{%else%}Present{% endif %}</p>
+                
+            </div>
+    
+            <div class="right">
+                <p class="p4">{{formation.diplome}}</p>
+                <p class="">{{formation.ecole}} <small style="color: #2fb7fe">{{formation.ville}}</small></p>
+                <p class="p5"><pre>{{formation.description}}</pre></p>
+            </div>
+            <div class="clearfix"></div>
+            </div>
+
+        {% endfor %}
+
+		<div class="lr-box">
+		<div class="right-heading">
+			<img src="{% static 'image/edu.png' %}">
+			<p class="p2">Skill and expertize</p>
+		</div>
+		<div class="clearfix"></div>
+		<ul class="mySkill">
+		{% if competences %}
+		{% for competence in competences %}
+		<li class="s-box">
+			<p class="p6-l">{{competence.competence}}</p>
+			<div style="width:;" class="">
+				<div class="contentProgress">
+					<div class="progress-bar">
+						<div class="progress" style="height: 100%;background-color: #2fb7fe;width: {{competence.niveau}}0%;transition: width 0.5s ease-in-out;">{% if competence.niveau <= 6 %}<i class="i"><small>Débutant</small></i>{% elif competence.niveau == 7 %}<i class="i"><small>Moyen</small></i>{% elif competence.niveau == 8 %}<i class="i"><small>Intermediaire</small></i>{% elif competence.niveau == 9 %}<i class="i"><small>Avancé</small></i>{% else %}<i class="i"><small>Parfait</small></i>{% endif %}
+						 </div>	
+					 </div> 
+				 </div>
+			</div>
+			
+		</li>
+       
+        {% endfor %}
+
+		{% endif %}
+	</ul >
+		
+
+
+		<div class="clearfix"></div>
+		<br><br>
+		{% if socials %}
+		<div class="right-heading">
+			<img src="{%  static 'image/hobbies.png' %}">
+			<p class="p2">Hobby & Internet</p>
+		</div>
+		<div class="clearfix"></div>
+		<img src="{% static 'image/bicycle.png'%}" class="h-img">
+		<img src="{% static 'image/games.png'%}" class="h-img">
+		<img src="{% static 'image/book.png'%}" class="h-img">
+		<img src="{% static 'image/design.png'%}" class="h-img">
+		<img src="{% static 'image/chess.png'%}" class="h-img">
+
+		{% endif %}
+	</div>
+
+		<div class="clearfix"></div>
+	
+		<div class="footer" style=''></div>	
+
+</div>
+
+<script src="{%static 'htmlCanvas.js'%}"></script>
+<script src="{%static 'jsPdf.js'%}"></script>
+
+<script>
+	
+		window.jsPDF = window.jspdf.jsPDF;
+		console.log(window.jspdf.jsPDF)
+// Convert HTML content to PDF
+function Convert_HTML_To_PDF() {
+    var doc = new jsPDF();
+	console.log(doc)
+    // Source HTMLElement or a string containing HTML.
+    var elementHTML = document.querySelector("#resume-box");
+
+    doc.html(elementHTML, {
+        callback: function(doc) {
+            // Save the PDF
+            doc.save('document-html.pdf');
+        },
+        margin: [5, 5, 5, 5],
+        autoPaging: 'text',
+        x: 0,
+        y: 0,
+        width: 200, //target width in the PDF document
+        windowWidth: 780 //window width in CSS pixels
+    });
+}
+		
+</script>
+{% endblock %}
